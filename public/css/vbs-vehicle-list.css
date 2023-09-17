@@ -1,0 +1,145 @@
+.vehicle_list_container {
+  width: 100%;
+}
+
+.vehicle_container {
+  border: 1px solid #4f4f4f;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: left;
+  gap: 10px;
+  height: 220px;
+}
+
+.vehicle_container .container_column {
+  padding: 15px;
+}
+
+.vehicle_container .image {
+  flex-basis: 15%;
+  display: flex;
+}
+
+.vehicle_container .image img {
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin: auto;
+}
+
+.vehicle_container .contents {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.vehicle_title {
+  margin: 0;
+  font-size: 25px;
+  color: #4f4f4f;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.vehicle_description {
+  font-size: 13px;
+  color: #6f6f6f;
+}
+
+.vehicle_bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vehicle_details > span {
+  margin-right: 15px;
+  color: #555;
+  background: #eee;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.vehicle_details > span svg {
+  top: 3px;
+  position: relative;
+}
+
+.vehicle_details > span svg path,
+.vehicle_details > span svg rect {
+  stroke: #555 !important;
+}
+
+.vehicle_extras {
+  height: 32px;
+}
+
+.vehicle_extras img {
+  margin: 0 10px 0 0;
+}
+
+.vehicle_extras img:last-of-type {
+  margin: 0;
+}
+
+.vehicle_container .actions {
+  flex-basis: 15%;
+  background: #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.book_price {
+  display: block;
+  font-size: 2em;
+  font-weight: 700;
+  margin: 0;
+}
+
+.distance {
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+a.book_now_btn {
+  color: #fff !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #000;
+  padding: 15px 30px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .vehicle_list_container .vehicle_container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .vehicle_container .container_column {
+    flex: 1;
+  }
+
+  .vehicle_container .actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .vehicle_container .actions > div {
+    line-height: 10px;
+  }
+
+  .vehicle_bottom {
+    align-items: start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
