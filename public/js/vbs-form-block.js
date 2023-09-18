@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   flatpickr('#return_datetime', flatpickrOptions);
 
   // Event for switching between location and address
-  document.querySelector('.pickup.switch').addEventListener("click", function (event) {
+  document.querySelector('.pickup.switch').addEventListener("click", (event) => {
   	event.preventDefault();
 
   	toggle(document.querySelector('input#pickup'));
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Event for switching between location and address
-  document.querySelector('.dropoff.switch').addEventListener("click", function (event) {
+  document.querySelector('.dropoff.switch').addEventListener("click", (event) => {
   	event.preventDefault();
 
   	toggle(document.querySelector('input#dropoff'));
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // AJAX call on button click
-  document.querySelector('button.submit').addEventListener("click", function (event) {
+  document.querySelector('button.submit').addEventListener("click", (event) => {
   	event.preventDefault();
 
   	let isPickupLocationValid = checkPickupLocation(),

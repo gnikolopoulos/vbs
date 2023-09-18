@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.book_now_btn').forEach(button => {
-      button.addEventListener("click", function (event) {
+    button.addEventListener("click", (event) => {
       event.preventDefault();
 
       const urlParams = new URLSearchParams(window.location.search)
