@@ -168,7 +168,7 @@ class Vbs_Admin
             '€' => 'Euro',
             '$' => 'United States Dollar',
           ])
-          ->set_default_value('EUR'),
+          ->set_default_value('€'),
       ])
       ->add_tab( __( 'Page Configuration', 'vbs' ), [
         Field::make( 'select', 'vehicles_page', __( 'Page that contains the vehicles list block', 'vbs' ) )
