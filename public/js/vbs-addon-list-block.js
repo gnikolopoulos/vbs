@@ -5,10 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const urlParams = new URLSearchParams(window.location.search)
       const data = new FormData();
-            data.append( 'action', 'select_vehicle' );
+            data.append( 'action', 'select_addon' );
             data.append( 'nonce', event.target.dataset.nonce );
-            data.append( 'distance', event.target.dataset.dist );
-            data.append( 'vehicle', event.target.dataset.vehicle );
+            data.append( 'addon', event.target.dataset.addon );
             data.append( 'search', urlParams.get( 'search' ) );
 
       fetch(wp_ajax.ajaxurl, {

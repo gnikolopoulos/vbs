@@ -1,6 +1,6 @@
 <div class="addon_list_container">
   <?php $nonce = wp_create_nonce('addon_list_nonce'); ?>
-  <?php foreach ( $transient_data['addons'] as $id => $name ): ?>
+  <?php foreach ( $transient_data['available_addons'] as $id => $name ): ?>
     <div class="addon_container" data-id="<?php echo $id; ?>">
       <div class="container_column image">
         <img src="<?php echo get_the_post_thumbnail_url( $id, 'medium' ); ?>" />

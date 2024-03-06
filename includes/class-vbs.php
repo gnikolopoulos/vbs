@@ -198,13 +198,19 @@ class Vbs
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'carbon_fields_register_fields', $plugin_public, 'register_blocks' );
+		$this->loader->add_shortcode( 'vbs_booking_form', $plugin_public, 'booking_form' );
+		$this->loader->add_shortcode( 'vbs_vehicles_list', $plugin_public, 'vehicles_list' );
+		$this->loader->add_shortcode( 'vbs_addons_list', $plugin_public, 'addons_list' );
+		$this->loader->add_shortcode( 'vbs_customer_information', $plugin_public, 'customer_information' );
 
 		$this->loader->add_action( 'wp_ajax_initiate_search', $plugin_public, 'initiate_search' );
 		$this->loader->add_action( 'wp_ajax_nopriv_initiate_search', $plugin_public, 'initiate_search' );
 
 		$this->loader->add_action( 'wp_ajax_select_vehicle', $plugin_public, 'select_vehicle' );
 		$this->loader->add_action( 'wp_ajax_nopriv_select_vehicle', $plugin_public, 'select_vehicle' );
+
+		$this->loader->add_action( 'wp_ajax_select_addon', $plugin_public, 'select_addon' );
+		$this->loader->add_action( 'wp_ajax_nopriv_select_addon', $plugin_public, 'select_addon' );
 	}
 
 	/**

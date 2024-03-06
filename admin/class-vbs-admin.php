@@ -511,8 +511,18 @@ class Vbs_Admin
             	'value' => 'location',
         		]
     			]),
-    		Field::make( 'checkbox', 'active', __( 'Active', 'vbs' ) )
-        	->set_option_value('yes'),
+        Field::make( 'radio', 'cost_type', __( 'Cost Type', 'vbs' ) )
+          ->set_options([
+            'flat' => __( 'Flat Amount', 'vbs' ),
+            'percentage' => __( 'Percentage', 'vbs' ),
+          ])
+          ->set_width(20),
+        Field::make( 'text', 'cost', __( 'Cost', 'vbs' ) )
+          ->set_required(true)
+          ->set_width(50),
+        Field::make( 'checkbox', 'active', __( 'Active', 'vbs' ) )
+          ->set_option_value('yes')
+          ->set_width(30),
     	]);
 
     // Locations

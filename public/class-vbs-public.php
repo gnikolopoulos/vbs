@@ -56,10 +56,25 @@ class Vbs_Public
 	 */
 	public function enqueue_styles()
 	{
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/vbs-public.css', [], $this->version, 'screen' );
+		global $post;
 
-		if (has_block('carbon-fields/vbs-booking-form')) {
+		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/vbs-public.css', [], $this->version, 'screen' );
+
+		if (has_shortcode($post->post_content, 'vbs_booking_form')) {
 			wp_enqueue_style( 'datetimepicker', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13', 'screen' );
+			wp_enqueue_style( 'vbs-form-block', plugin_dir_url( __FILE__ ) . 'css/vbs-form-block.css', [], $this->version, 'screen' );
+		}
+
+		if (is_page(carbon_get_theme_option( 'vehicles_page' ))) {
+			wp_enqueue_style( 'vbs-vehicle-list', plugin_dir_url( __FILE__ ) . 'css/vbs-vehicle-list.css', [], $this->version, 'screen' );
+		}
+
+		if (is_page(carbon_get_theme_option( 'addons_page' ))) {
+			wp_enqueue_style( 'vbs-addon-list', plugin_dir_url( __FILE__ ) . 'css/vbs-addon-list.css', [], $this->version, 'screen' );
+		}
+
+		if (is_page(carbon_get_theme_option( 'customer_page' ))) {
+			wp_enqueue_style( 'vbs-form-block', plugin_dir_url( __FILE__ ) . 'css/vbs-form-block.css', [], $this->version, 'screen' );
 		}
 	}
 
@@ -70,9 +85,10 @@ class Vbs_Public
 	 */
 	public function enqueue_scripts()
 	{
+		global $post;
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vbs-public.js', ['jquery'], $this->version, false );
 
-		if (has_block('carbon-fields/vbs-booking-form')) {
+		if (has_shortcode($post->post_content, 'vbs_booking_form')) {
 			wp_enqueue_script( 'datetimepicker', 'https://cdn.jsdelivr.net/npm/flatpickr', ['jquery'], '4.6.13', true );
 			wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?key='.carbon_get_theme_option('google_api_key').'&libraries=places', [], '', true);
 			wp_enqueue_script( 'google-maps-init', plugin_dir_url( __FILE__ ) . 'js/google-maps-init.js', ['google-maps'], '', true);
@@ -81,70 +97,100 @@ class Vbs_Public
 			wp_enqueue_script( 'vbs-form-block' );
 		}
 
-		if (has_block('carbon-fields/vbs-vehicles-list')) {
+		if (is_page(carbon_get_theme_option( 'vehicles_page' ))) {
 			wp_register_script( 'vbs-vehicles-list-block', plugin_dir_url( __FILE__ ) . 'js/vbs-vehicles-list-block.js', [], $this->version, true );
 			wp_localize_script( 'vbs-vehicles-list-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 			wp_enqueue_script( 'vbs-vehicles-list-block' );
 		}
+
+		if (is_page(carbon_get_theme_option( 'addons_page' ))) {
+			wp_register_script( 'vbs-addon-list-block', plugin_dir_url( __FILE__ ) . 'js/vbs-addon-list-block.js', [], $this->version, true );
+			wp_localize_script( 'vbs-addon-list-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+			wp_enqueue_script( 'vbs-addon-list-block' );
+		}
+
+		if (is_page(carbon_get_theme_option( 'customer_page' ))) {
+			wp_register_script( 'vbs-customer-information-block', plugin_dir_url( __FILE__ ) . 'js/vbs-customer-information-block.js', [], $this->version, true );
+			wp_localize_script( 'vbs-customer-information-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+			wp_enqueue_script( 'vbs-customer-information-block' );
+		}
 	}
 
-	/**
-   * Register the plugin blocks for Guttenberg Editor
-   * Also uses wp_register_style to register custom styles to be used
+  /**
+   * Render the booking form shortcode
    *
    * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
    */
-  public function register_blocks()
+  public function booking_form( $atts )
   {
-  	wp_register_style( 'vbs-form-block', plugin_dir_url( __FILE__ ) . 'css/vbs-form-block.css', [], $this->version, 'screen' );
-  	wp_register_style( 'vbs-vehicle-list', plugin_dir_url( __FILE__ ) . 'css/vbs-vehicle-list.css', [], $this->version, 'screen' );
-  	wp_register_style( 'vbs-addon-list', plugin_dir_url( __FILE__ ) . 'css/vbs-addon-list.css', [], $this->version, 'screen' );
+  	ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_form.php';
+  	return ob_get_clean();
+  }
 
-  	Block::make( __( 'VBS Booking form', 'vbs' ) )
-  		->set_description( __( 'Shows the booking form', 'vbs' ) )
-  		->set_category( 'vbs', __( 'Vehicle Booking System', 'vbs' ), 'car' )
-  		->set_mode('both')
-  		->set_icon( 'feedback' )
-  		->set_style( 'vbs-form-block' )
-  		->set_inner_blocks( false )
-  		->set_render_callback(function () {
-  			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/blocks/booking_form.php';
-  		});
+  /**
+   * Render the vehicle list shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function vehicles_list( $atts )
+  {
+  	$helper = new Vbs_Helper( $this->plugin_name, $this->version );
+	  $transient_data = get_transient( get_query_var( 'search' ) );
+	  $distance = 0;
+	  if ( $transient_data ) {
+	    $distance = $helper->getDistance( $helper->formatDataForDistance( $transient_data ) );
+	    if ( $transient_data['return_datetime'] != '' ) {
+	      $distance = $distance * 2;
+	    }
+	  }
 
-  	Block::make( __( 'VBS Vehicles List', 'vbs' ) )
-  		->set_description( __( 'Shows the available vehicles after a search', 'vbs' ) )
-  		->set_category( 'vbs', __( 'Vehicle Booking System', 'vbs' ), 'car' )
-  		->set_mode('both')
-  		->set_icon( 'list-view' )
-  		->set_style( 'vbs-vehicle-list' )
-  		->set_inner_blocks( false )
-  		->set_render_callback(function () {
-  			$helper = new Vbs_Helper( $this->plugin_name, $this->version );
-			  $transient_data = get_transient( get_query_var( 'search' ) );
-			  $distance = 0;
-			  if ( $transient_data ) {
-			    $distance = $helper->getDistance( $helper->formatDataForDistance( $transient_data ) );
-			    if ( $transient_data['return_datetime'] != '' ) {
-			      $distance = $distance * 2;
-			    }
-			  }
+	  ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/vehicles_list.php';
+  	return ob_get_clean();
+  }
 
-  			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/blocks/vehicles_list.php';
-  		});
+  /**
+   * Render the addons list shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function addons_list( $atts )
+  {
+  	$helper = new Vbs_Helper( $this->plugin_name, $this->version );
+		$transient_data = get_transient( get_query_var( 'search' ) );
 
-  	Block::make( __( 'VBS Addons List', 'vbs' ) )
-  		->set_description( __( 'Shows the available addons for the selected vehicle', 'vbs' ) )
-  		->set_category( 'vbs', __( 'Vehicle Booking System', 'vbs' ), 'car' )
-  		->set_mode('both')
-  		->set_icon( 'list-view' )
-  		->set_style( 'vbs-addon-list' )
-  		->set_inner_blocks( false )
-  		->set_render_callback(function () {
-  			$helper = new Vbs_Helper( $this->plugin_name, $this->version );
-			  $transient_data = get_transient( get_query_var( 'search' ) );
+	  ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/addons_list.php';
+  	return ob_get_clean();
+  }
 
-  			require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/blocks/addons_list.php';
-  		});
+  /**
+   * Render the customer information form shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function customer_information( $atts )
+  {
+  	ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/customer_information.php';
+  	return ob_get_clean();
   }
 
   /**
@@ -220,7 +266,7 @@ class Vbs_Public
    	$transient_data = array_merge( $transient_data, [
    		'distance' => (int)$_POST['distance'],
    		'vehicle' => (int)$_POST['vehicle'],
-   		'addons' => $helper->getAddons( (int)$_POST['vehicle'] ),
+   		'available_addons' => $helper->getAddons( (int)$_POST['vehicle'] ),
    		'cost' => $helper->calculatePrice( (int)$_POST['vehicle'], (int)$_POST['distance'] ),
    	] );
 
@@ -231,11 +277,47 @@ class Vbs_Public
    		'result' => true,
    	];
 
-   	if ( count( $transient_data ) > 0 ) {
+   	if ( count( $transient_data['addons'] ) > 0 ) {
    		$return_data['redirect'] = get_page_link( carbon_get_theme_option( 'addons_page' ) ) . '?search=' . $_POST['search'];
    	} else {
    		$return_data['redirect'] = get_page_link( carbon_get_theme_option( 'customer_page' ) ) . '?search=' . $_POST['search'];
    	}
+
+   	echo json_encode($return_data);
+    die();
+  }
+
+  /**
+   * Function that updated the tansient with the selected addon
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function select_addon()
+  {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], "addon_list_nonce")) {
+      exit("No naughty business please");
+   	}
+
+   	$transient_data = get_transient( $_POST['search'] );
+   	if ( !$transient_data ) {
+   		echo json_encode(['result' => false,]);
+    	die();
+   	}
+
+   	$helper = new Vbs_Helper();
+   	$transient_data = array_merge( $transient_data, [
+   		'addon' => (int)$_POST['addon'],
+   	] );
+
+   	// Update the transient
+   	set_transient( $_POST['search'], $transient_data, 2 * HOUR_IN_SECONDS );
+
+   	$return_data = [
+   		'result' => true,
+   		'redirect' => get_page_link( carbon_get_theme_option( 'customer_page' ) ) . '?search=' . $_POST['search'],
+   	];
 
    	echo json_encode($return_data);
     die();
