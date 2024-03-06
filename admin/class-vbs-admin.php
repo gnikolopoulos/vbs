@@ -98,7 +98,7 @@ class Vbs_Admin
         'slug'               => 'carbon-fields',
         'source'             => plugin_dir_path( dirname( __FILE__ ) ) . '/lib/plugins/carbon-fields.zip',
         'required'           => true,
-        'version'            => '3.6.0',
+        'version'            => '3.6.3',
         'force_activation'   => false,
         'force_deactivation' => true,
       ],
