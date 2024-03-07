@@ -159,9 +159,9 @@ class Vbs_Helper
     $sql_params = [
       (int)$params['passengers'],
       $params['pickup_datetime'],
-      $params['return_datetime'],
+      $params['return_datetime'] != '' ? $params['return_datetime'] : $params['pickup_datetime'],
       $params['pickup_datetime'],
-      $params['return_datetime'],
+      $params['return_datetime'] != '' ? $params['return_datetime'] : $params['pickup_datetime'],
     ];
 
     return $wpdb->get_results( $wpdb->prepare( $query, $sql_params ), ARRAY_A );

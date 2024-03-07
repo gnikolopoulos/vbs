@@ -1,11 +1,16 @@
-(function( $ ) {
-  'use strict';
-
-  $(function() {
+document.addEventListener('DOMContentLoaded', () => {
+  (async () => {
+    const element = await waitForElement("#map");
     window.initMap = initMap();
-  });
+  })();
+});
 
-})( jQuery );
+async function waitForElement(selector) {
+  while (!document.querySelector(selector)) {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+  }
+  return document.querySelector(selector);
+}
 
 function initMap() {
   const directionsService = new google.maps.DirectionsService();

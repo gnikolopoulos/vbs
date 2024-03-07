@@ -63,15 +63,16 @@ class Vbs_Admin
 	 */
 	public function enqueue_scripts()
 	{
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vbs-admin.js', array( 'jquery' ), $this->version, false );
+		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vbs-admin.js', array( 'jquery' ), $this->version, false );
 	}
 
   public function add_maps_js()
   {
     global $post_type;
     if ( 'booking' == $post_type ) {
-      wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?key='.carbon_get_theme_option('google_api_key').'&v=weekly', ['google-maps-booking'], null, ['strategy' => 'async', 'in_footer' => true]);
-      wp_enqueue_script( 'google-maps-booking', plugin_dir_url( __FILE__ ) . 'js/vbs-admin-booking.js', [], null, ['strategy' => 'defer', 'in_footer' => true] );
+      wp_enqueue_script( 'google-maps', 'https://maps.googleapis.com/maps/api/js?key='.carbon_get_theme_option('google_api_key').'&v=weekly', ['google-maps-booking'], null, ['strategy' => 'async', 'in_footer' => false]);
+
+      wp_enqueue_script( 'google-maps-booking', plugin_dir_url( __FILE__ ) . 'js/vbs-admin-booking.js', [], $this->version, ['strategy' => 'async', 'in_footer' => true] );
     }
   }
 
@@ -210,6 +211,14 @@ class Vbs_Admin
             	<%- name %>
             <% } %>
           '),
+      ])
+      ->add_tab( __( 'Payment Methods', 'vbs' ), [
+        Field::make( 'checkbox', 'cash', __( 'Cash', 'vbs' ) )
+          ->set_option_value('yes'),
+        Field::make( 'checkbox', 'credit', __( 'Credit Card', 'vbs' ) )
+          ->set_option_value('yes'),
+        Field::make( 'checkbox', 'paypal', __( 'PayPal', 'vbs' ) )
+          ->set_option_value('yes'),
       ]);
 
     // Drivers
@@ -449,9 +458,11 @@ class Vbs_Admin
         Field::make( 'text', 'last_name', __( 'Last Name', 'vbs' ) )
         	->set_width(50),
         Field::make( 'text', 'email', __( 'Email', 'vbs' ) )
+        	->set_width(100),
+        Field::make( 'text', 'phone', __( 'Phone', 'vbs' ) )
         	->set_width(50),
-        Field::make( 'text', 'phone', __( 'Phone Number', 'vbs' ) )
-        	->set_width(50),
+        Field::make( 'text', 'mobile', __( 'Mobile', 'vbs' ) )
+          ->set_width(50),
     		Field::make( 'textarea', 'notes', __( 'Customer Notes', 'vbs' ) ),
     	])
     	->add_tab( __( 'Misc Information', 'vbs' ), [

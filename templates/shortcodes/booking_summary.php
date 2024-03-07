@@ -40,7 +40,18 @@
 
     <h3><?php echo __( 'Cost', 'vbs' ); ?></h3>
     <ul class="cost">
-      <li><span><?php echo __( 'Total', 'vbs' ); ?>:</span> <?php echo $helper->formatPrice((float)$transient_data['cost']); ?></li>
+      <li>
+        <span><?php echo __( 'Vehicle Cost', 'vbs' ); ?>: </span>
+        <?php echo $helper->formatPrice((float)$transient_data['vehicle_cost']); ?>
+      </li>
+      <li>
+        <span><?php echo __( 'Addon Cost', 'vbs' ); ?>: </span>
+        <?php echo $helper->formatPrice((float)$transient_data['addon_cost']); ?>
+      </li>
+      <li>
+        <span><?php echo __( 'Total', 'vbs' ); ?>: </span>
+        <?php echo $helper->formatPrice((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost']); ?>
+      </li>
     </ul>
 
     <div class="actions">

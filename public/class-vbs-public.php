@@ -58,8 +58,6 @@ class Vbs_Public
 	{
 		global $post;
 
-		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/vbs-public.css', [], $this->version, 'screen' );
-
 		if (has_shortcode($post->post_content, 'vbs_booking_form')) {
 			wp_enqueue_style( 'datetimepicker', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css', [], '4.6.13', 'screen' );
 			wp_enqueue_style( 'vbs-form-block', plugin_dir_url( __FILE__ ) . 'css/vbs-form-block.css', [], $this->version, 'screen' );
@@ -90,7 +88,6 @@ class Vbs_Public
 	public function enqueue_scripts()
 	{
 		global $post;
-		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/vbs-public.js', ['jquery'], $this->version, false );
 
 		if (has_shortcode($post->post_content, 'vbs_booking_form')) {
 			wp_enqueue_script( 'datetimepicker', 'https://cdn.jsdelivr.net/npm/flatpickr', ['jquery'], '4.6.13', true );
@@ -204,6 +201,24 @@ class Vbs_Public
   }
 
   /**
+   * Render the booking confirmation shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function booking_confirmation( $atts )
+  {
+  	$transient_data = get_transient( get_query_var( 'search' ) );
+
+  	ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_confirmation.php';
+  	return ob_get_clean();
+  }
+
+  /**
    * Render the booking summary shortcode
    *
    * @since    1.0.0
@@ -296,7 +311,7 @@ class Vbs_Public
    		'distance' => (int)$_POST['distance'],
    		'vehicle' => (int)$_POST['vehicle'],
    		'available_addons' => $helper->getAddons( (int)$_POST['vehicle'] ),
-   		'cost' => $helper->calculatePrice( (int)$_POST['vehicle'], (int)$_POST['distance'] ),
+   		'vehicle_cost' => $helper->calculatePrice( (int)$_POST['vehicle'], (int)$_POST['distance'] ),
    	] );
 
    	// Update the transient
@@ -338,6 +353,7 @@ class Vbs_Public
    	$helper = new Vbs_Helper();
    	$transient_data = array_merge( $transient_data, [
    		'addon' => (int)$_POST['addon'],
+   		'addon_cost' => (float)carbon_get_post_meta( (int)$_POST['addon'], 'cost' )
    	] );
 
    	// Update the transient
@@ -374,7 +390,6 @@ class Vbs_Public
     	die();
    	}
 
-   	$helper = new Vbs_Helper();
    	$transient_data = array_merge( $transient_data, [
    		'customer' => [
    			'first_name' => $_POST['first_name'],
@@ -392,6 +407,89 @@ class Vbs_Public
    	$return_data = [
    		'result' => true,
    		'redirect' => get_page_link( carbon_get_theme_option( 'summary_page' ) ) . '?search=' . $_POST['search'],
+   	];
+
+   	echo json_encode($return_data);
+    die();
+  }
+
+  /**
+   * Function that updates the tansient with payment information
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function summary()
+  {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], 'booking_summary_nonce')) {
+      exit("No naughty business please");
+   	}
+
+   	$transient_data = get_transient( $_POST['search'] );
+   	if ( !$transient_data ) {
+   		echo json_encode([
+   			'result' => false,
+   			'reason' => 'transient not found',
+   		]);
+    	die();
+   	}
+
+   	$transient_data = array_merge( $transient_data, [
+   		'total_cost' => (float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost'],
+   		'payment_method' => 'cash',
+   	] );
+
+   	// Update the transient
+   	set_transient( $_POST['search'], $transient_data, 2 * HOUR_IN_SECONDS );
+
+   	$post_id = wp_insert_post([
+   		'post_date' => date('Y-m-d H:i:s'),
+   		'post_title' => '#' . $transient_data['id'],
+   		'post_status' => 'publish',
+   		'post_type' => 'booking',
+   		'meta_input' => [
+   			'_pickup_datetime' => date('Y-m-d H:i:s', strtotime($transient_data['pickup_datetime'])),
+   			'_pickup_address' => $transient_data['pickup']['address'],
+   			'_pickup_address_coordinates' => $transient_data['pickup']['lat'] . ', ' . $transient_data['pickup']['lng'],
+   			'_dropoff_address' => $transient_data['dropoff']['address'],
+   			'_dropoff_address_coordinates' => $transient_data['dropoff']['lat'] . ', ' . $transient_data['dropoff']['lng'],
+   			'_return' => $transient_data['return_datetime'] != '' ? 'yes' : 'no',
+   			'_return_datetime' => $transient_data['return_datetime'] ? date('Y-m-d H:i:s', strtotime($transient_data['return_datetime'])) : '',
+   			'_distance' => $transient_data['distance'],
+   			'_disctance_cost' => $transient_data['vehicle_cost'],
+   			'_addons_cost' => $transient_data['addon_cost'],
+   			'_surcharge_cost' => '',
+   			'_total_cost' => $transient_data['total_cost'],
+   			'_vehicle' => $transient_data['vehicle'],
+   			'_persons' => $transient_data['passengers'],
+   			'_luggage' => '',
+   			'_addons|||0|value' => 'post:addon:' . $transient_data['addon'],
+				'_addons|||0|type' => 'post',
+				'_addons|||0|subtype' => 'addon',
+				'_addons|||0|id' => $transient_data['addon'],
+   			'_first_name' => $transient_data['customer']['first_name'],
+   			'_last_name' => $transient_data['customer']['last_name'],
+   			'_email' => $transient_data['customer']['email'],
+   			'_phone' => $transient_data['customer']['phone'],
+   			'_mobile' => $transient_data['customer']['mobile'],
+   			'_notes' => $transient_data['customer']['notes'],
+   			'_status' => 'pending',
+   			'_payment_method' => $transient_data['payment_method'],
+   		],
+   	]);
+
+   	if ( $post_id == 0 ) {
+   		echo json_encode([
+   			'result' => false,
+   			'reason' => 'could not create post',
+   		]);
+    	die();
+   	}
+
+   	$return_data = [
+   		'result' => true,
+   		'redirect' => get_page_link( carbon_get_theme_option( 'confirmation_page' ) ) . '?search=' . $_POST['search'],
    	];
 
    	echo json_encode($return_data);
