@@ -1,4 +1,24 @@
-/**
- * All of the CSS for your admin-specific functionality should be
- * included in this file.
- */
+.booking-status {
+  text-transform: uppercase;
+  padding: 6px 15px;
+}
+
+.booking-status.status-pending {
+  background-color: #FFD700;
+  color: #000;
+}
+
+.booking-status.status-confirmed {
+  background-color: #00BFFF;
+  color: #000;
+}
+
+.booking-status.status-complete {
+  background-color: #32CD32;
+  color: #000;
+}
+
+.booking-status.status-canceled {
+  background-color: #FF5733 ;
+  color: #fff;
+}

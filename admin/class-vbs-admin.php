@@ -838,6 +838,7 @@ class Vbs_Admin
   	unset($columns['date']);
 
   	return array_merge($columns, [
+      'status' => __( 'Status', 'vbs' ),
   		'dates' => __( 'Pickup/Return Date', 'vbs' ),
   		'vehicle' => __( 'Vehicle', 'vbs' ),
   		'driver' => __( 'Driver', 'vbs' ),
@@ -860,6 +861,9 @@ class Vbs_Admin
   public function booking_columns_renderer( string $column, int $post_id )
   {
   	switch ( $column ) {
+      case 'status':
+        echo sprintf('<span class="booking-status status-%s">%s</span>', carbon_get_post_meta($post_id, 'status'), carbon_get_post_meta($post_id, 'status'));
+        break;
   		case 'dates':
   			$pickup = date('F j, Y H:i:s', strtotime(carbon_get_post_meta($post_id, 'pickup_datetime')));
   			$dropoff = carbon_get_post_meta($post_id, 'return_datetime') ? date('F j, Y H:i:s', strtotime(carbon_get_post_meta($post_id, 'return_datetime'))) : '';
@@ -869,7 +873,7 @@ class Vbs_Admin
   			echo get_the_title(carbon_get_post_meta($post_id, 'vehicle'));
   			break;
   		case 'driver':
-  			echo carbon_get_post_meta($post_id, 'driver') ? get_the_title(carbon_get_post_meta($post_id, 'driver')) : __( 'Unassinged', 'vbs' );
+  			echo carbon_get_post_meta($post_id, 'driver') ? get_the_title(carbon_get_post_meta($post_id, 'driver')) : '---';
   			break;
   		case 'customer':
   			echo sprintf('%s %s', carbon_get_post_meta($post_id, 'first_name'), carbon_get_post_meta($post_id, 'last_name'));
