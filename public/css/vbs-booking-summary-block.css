@@ -1,0 +1,25 @@
+.booking_summary_container ul {
+  list-style-type: none;
+}
+
+.booking_summary_container ul li span {
+  font-weight: 700;
+}
+
+.booking_summary_container .actions a {
+  text-decoration: none;
+  padding: 20px 60px;
+  background: #333;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 5px;
+}
+
+.booking_summary_container .actions a.back {
+  float: left;
+}
+
+.booking_summary_container .actions a.book_now_btn {
+  float: right;
+}

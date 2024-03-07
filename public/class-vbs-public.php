@@ -76,6 +76,10 @@ class Vbs_Public
 		if (is_page(carbon_get_theme_option( 'customer_page' ))) {
 			wp_enqueue_style( 'vbs-form-block', plugin_dir_url( __FILE__ ) . 'css/vbs-form-block.css', [], $this->version, 'screen' );
 		}
+
+		if (is_page(carbon_get_theme_option( 'summary_page' ))) {
+			wp_enqueue_style( 'vbs-booking-summary-block', plugin_dir_url( __FILE__ ) . 'css/vbs-booking-summary-block.css', [], $this->version, 'screen' );
+		}
 	}
 
 	/**
@@ -113,6 +117,12 @@ class Vbs_Public
 			wp_register_script( 'vbs-customer-information-block', plugin_dir_url( __FILE__ ) . 'js/vbs-customer-information-block.js', [], $this->version, true );
 			wp_localize_script( 'vbs-customer-information-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 			wp_enqueue_script( 'vbs-customer-information-block' );
+		}
+
+		if (is_page(carbon_get_theme_option( 'summary_page' ))) {
+			wp_register_script( 'vbs-booking-summary-block', plugin_dir_url( __FILE__ ) . 'js/vbs-booking-summary-block.js', [], $this->version, true );
+			wp_localize_script( 'vbs-booking-summary-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+			wp_enqueue_script( 'vbs-booking-summary-block' );
 		}
 	}
 
@@ -194,6 +204,25 @@ class Vbs_Public
   }
 
   /**
+   * Render the booking summary shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function booking_summary( $atts )
+  {
+  	$helper = new Vbs_Helper( $this->plugin_name, $this->version );
+  	$transient_data = get_transient( get_query_var( 'search' ) );
+
+  	ob_start();
+  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_summary.php';
+  	return ob_get_clean();
+  }
+
+  /**
    * Function that creates the initial search params for the booking
    *
    * Uses the uuid generated to create a trnasient that holds the booking data until the booking is finalized
@@ -204,7 +233,7 @@ class Vbs_Public
    */
   public function initiate_search()
   {
-  	if ( !wp_verify_nonce( $_REQUEST['nonce'], "initiate_search_nonce")) {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], 'initiate_search_nonce')) {
       exit("No naughty business please");
    	}
 
@@ -244,7 +273,7 @@ class Vbs_Public
   }
 
   /**
-   * Function that updated the tansient with the selected vehicle, distance, cost and available addons to shoose from
+   * Function that updates the tansient with the selected vehicle, distance, cost and available addons to shoose from
    *
    * @since    1.0.0
    *
@@ -252,7 +281,7 @@ class Vbs_Public
    */
   public function select_vehicle()
   {
-  	if ( !wp_verify_nonce( $_REQUEST['nonce'], "vehicle_list_nonce")) {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], 'vehicle_list_nonce')) {
       exit("No naughty business please");
    	}
 
@@ -277,7 +306,7 @@ class Vbs_Public
    		'result' => true,
    	];
 
-   	if ( count( $transient_data['addons'] ) > 0 ) {
+   	if ( count( $transient_data['available_addons'] ) > 0 ) {
    		$return_data['redirect'] = get_page_link( carbon_get_theme_option( 'addons_page' ) ) . '?search=' . $_POST['search'];
    	} else {
    		$return_data['redirect'] = get_page_link( carbon_get_theme_option( 'customer_page' ) ) . '?search=' . $_POST['search'];
@@ -288,7 +317,7 @@ class Vbs_Public
   }
 
   /**
-   * Function that updated the tansient with the selected addon
+   * Function that updates the tansient with the selected addon
    *
    * @since    1.0.0
    *
@@ -296,7 +325,7 @@ class Vbs_Public
    */
   public function select_addon()
   {
-  	if ( !wp_verify_nonce( $_REQUEST['nonce'], "addon_list_nonce")) {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], 'addon_list_nonce')) {
       exit("No naughty business please");
    	}
 
@@ -317,6 +346,52 @@ class Vbs_Public
    	$return_data = [
    		'result' => true,
    		'redirect' => get_page_link( carbon_get_theme_option( 'customer_page' ) ) . '?search=' . $_POST['search'],
+   	];
+
+   	echo json_encode($return_data);
+    die();
+  }
+
+  /**
+   * Function that updates the tansient with customer information
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function customer_data()
+  {
+  	if ( !wp_verify_nonce( $_REQUEST['nonce'], 'customer_info_nonce')) {
+      exit("No naughty business please");
+   	}
+
+   	$transient_data = get_transient( $_POST['search'] );
+   	if ( !$transient_data ) {
+   		echo json_encode([
+   			'result' => false,
+   			'reason' => 'transient not found',
+   		]);
+    	die();
+   	}
+
+   	$helper = new Vbs_Helper();
+   	$transient_data = array_merge( $transient_data, [
+   		'customer' => [
+   			'first_name' => $_POST['first_name'],
+   			'last_name' => $_POST['last_name'],
+   			'email' => $_POST['email'],
+   			'phone' => $_POST['phone'],
+   			'mobile' => $_POST['mobile'],
+   			'notes' => $_POST['notes'],
+   		],
+   	] );
+
+   	// Update the transient
+   	set_transient( $_POST['search'], $transient_data, 2 * HOUR_IN_SECONDS );
+
+   	$return_data = [
+   		'result' => true,
+   		'redirect' => get_page_link( carbon_get_theme_option( 'summary_page' ) ) . '?search=' . $_POST['search'],
    	];
 
    	echo json_encode($return_data);

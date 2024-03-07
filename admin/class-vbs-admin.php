@@ -171,13 +171,15 @@ class Vbs_Admin
           ->set_default_value('€'),
       ])
       ->add_tab( __( 'Page Configuration', 'vbs' ), [
-        Field::make( 'select', 'vehicles_page', __( 'Page that contains the vehicles list block', 'vbs' ) )
+        Field::make( 'select', 'vehicles_page', __( 'Page that contains the vehicles list shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
-        Field::make( 'select', 'addons_page', __( 'Page that contains the addons list block', 'vbs' ) )
+        Field::make( 'select', 'addons_page', __( 'Page that contains the addons list shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
-        Field::make( 'select', 'customer_page', __( 'Page that contains the customer information block', 'vbs' ) )
+        Field::make( 'select', 'customer_page', __( 'Page that contains the customer information shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
-        Field::make( 'select', 'confirmation_page', __( 'Page that contains the booking confirmation block', 'vbs' ) )
+        Field::make( 'select', 'summary_page', __( 'Page that contains the booking summary shortcode', 'vbs' ) )
+          ->set_options(['Vbs_Helper', 'getPages']),
+        Field::make( 'select', 'confirmation_page', __( 'Page that contains the booking confirmation shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
       ])
       ->add_tab( __( 'Vehicle Features', 'vbs' ), [

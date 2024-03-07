@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('button.next').addEventListener("click", (event) => {
+  document.querySelector('button.back').addEventListener("click", (event) => {
     event.preventDefault();
 
     history.back();
@@ -24,12 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return false;
     }
 
-    return false;
-
     const urlParams = new URLSearchParams(window.location.search)
     const data = new FormData( document.getElementById('vbs_customer_info_form') );
-          data.append( 'action', 'customer_information' );
+          data.append( 'action', 'customer_data' );
           data.append( 'nonce', document.getElementById('nonce').value );
+          data.append( 'search', urlParams.get( 'search' ) );
 
     fetch(wp_ajax.ajaxurl, {
       method: 'post',

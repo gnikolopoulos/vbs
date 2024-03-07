@@ -202,6 +202,7 @@ class Vbs
 		$this->loader->add_shortcode( 'vbs_vehicles_list', $plugin_public, 'vehicles_list' );
 		$this->loader->add_shortcode( 'vbs_addons_list', $plugin_public, 'addons_list' );
 		$this->loader->add_shortcode( 'vbs_customer_information', $plugin_public, 'customer_information' );
+		$this->loader->add_shortcode( 'vbs_booking_summary', $plugin_public, 'booking_summary' );
 
 		$this->loader->add_action( 'wp_ajax_initiate_search', $plugin_public, 'initiate_search' );
 		$this->loader->add_action( 'wp_ajax_nopriv_initiate_search', $plugin_public, 'initiate_search' );
@@ -211,6 +212,9 @@ class Vbs
 
 		$this->loader->add_action( 'wp_ajax_select_addon', $plugin_public, 'select_addon' );
 		$this->loader->add_action( 'wp_ajax_nopriv_select_addon', $plugin_public, 'select_addon' );
+
+		$this->loader->add_action( 'wp_ajax_customer_data', $plugin_public, 'customer_data' );
+		$this->loader->add_action( 'wp_ajax_nopriv_customer_data', $plugin_public, 'customer_data' );
 	}
 
 	/**

@@ -243,6 +243,13 @@ class Vbs_Helper
     return round(($distance/1000) * $matching_entry[0]['cost'], 2);
   }
 
+  /**
+   * Display the given price based on settings
+   *
+   * @since    1.0.0
+   * @param    float    $price    Input price to format
+   * @return   string             Formatted price
+   */
   public function formatPrice( float $price )
   {
     return carbon_get_theme_option( 'currency' ) . ' ' . number_format( $price, 2, ',', '' );
