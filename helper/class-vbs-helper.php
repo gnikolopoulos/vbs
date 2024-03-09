@@ -255,4 +255,38 @@ class Vbs_Helper
     return carbon_get_theme_option( 'currency' ) . ' ' . number_format( $price, 2, ',', '' );
   }
 
+  /**
+   * Returns an array of the enabled payment methods
+   *
+   * @since    1.0.0
+   * @return   array              Methods array
+   */
+  public function getPaymentMethods()
+  {
+    $methods = [];
+
+    if (carbon_get_theme_option('cash_enabled') == 'yes') {
+      $methods[] = [
+        'title' => carbon_get_theme_option('cash_title'),
+        'description' => carbon_get_theme_option('cash_description'),
+      ]
+    }
+
+    if (carbon_get_theme_option('cc_enabled') == 'yes') {
+      $methods[] = [
+        'title' => carbon_get_theme_option('cc_title'),
+        'description' => carbon_get_theme_option('cc_description'),
+      ]
+    }
+
+    if (carbon_get_theme_option('paypal_enabled') == 'yes') {
+      $methods[] = [
+        'title' => carbon_get_theme_option('paypaltitle'),
+        'description' => carbon_get_theme_option('paypal_description'),
+      ]
+    }
+
+    return $methods;
+  }
+
 }

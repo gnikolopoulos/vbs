@@ -118,6 +118,11 @@ class Vbs
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'helper/class-vbs-helper.php';
 
 		/**
+		 * The class responsible for handling credit card payment functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'helper/class-vbs-viva.php';
+
+		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-vbs-admin.php';

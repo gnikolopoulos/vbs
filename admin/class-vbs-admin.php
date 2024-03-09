@@ -211,14 +211,54 @@ class Vbs_Admin
             	<%- name %>
             <% } %>
           '),
+      ]);
+
+    // Payment method settings
+    Container::make( 'theme_options', __( 'Payment Methods', 'vbs' ) )
+      ->set_page_parent( 'vbs.php' )
+      ->add_tab( __( 'Cash', 'vbs' ), [
+        Field::make( 'checkbox', 'cash_enabled', __( 'Enabled', 'vbs' ) )
+          ->set_option_value('yes'),
+        Field::make( 'text', 'cash_title', __( 'Title', 'vbs' ) )
+          ->set_default_value('Cash')
+          ->set_required(true),
+        Field::make( 'text', 'cash_description', __( 'Description', 'vbs' ) )
+          ->set_default_value('Cash')
+          ->set_required(false),
       ])
-      ->add_tab( __( 'Payment Methods', 'vbs' ), [
-        Field::make( 'checkbox', 'cash', __( 'Cash', 'vbs' ) )
+      ->add_tab( __( 'Credit Card', 'vbs' ), [
+        Field::make( 'checkbox', 'cc_enabled', __( 'Enabled', 'vbs' ) )
           ->set_option_value('yes'),
-        Field::make( 'checkbox', 'credit', __( 'Credit Card', 'vbs' ) )
+        Field::make( 'text', 'cc_title', __( 'Title', 'vbs' ) )
+          ->set_default_value('Credit/Debit Card')
+          ->set_required(true),
+        Field::make( 'text', 'cc_description', __( 'Description', 'vbs' ) )
+          ->set_default_value('Credit/Debit Card')
+          ->set_required(false),
+        Field::make( 'text', 'cc_mid', __( 'Merchant ID', 'vbs' ) )
+          ->set_required(false),
+        Field::make( 'text', 'cc_api_key', __( 'API Key', 'vbs' ) )
+          ->set_required(false),
+        Field::make( 'text', 'cc_cid', __( 'Client ID', 'vbs' ) )
+          ->set_required(false),
+        Field::make( 'text', 'cc_source_code', __( 'Source Code', 'vbs' ) )
+          ->set_required(false),
+        Field::make( 'select', 'cc_environment', __( 'Environment', 'vbs' ) )
+          ->set_options([
+            'demo' => __('Demo', 'vbs'),
+            'live' => __('Live', 'vbs'),
+          ])
+          ->set_default_value('demo'),
+      ])
+      ->add_tab( __( 'PayPal', 'vbs' ), [
+        Field::make( 'checkbox', 'paypal_enabled', __( 'Enabled', 'vbs' ) )
           ->set_option_value('yes'),
-        Field::make( 'checkbox', 'paypal', __( 'PayPal', 'vbs' ) )
-          ->set_option_value('yes'),
+        Field::make( 'text', 'paypal_title', __( 'Title', 'vbs' ) )
+          ->set_default_value('PayPal')
+          ->set_required(true),
+        Field::make( 'text', 'paypal_description', __( 'Description', 'vbs' ) )
+          ->set_default_value('PayPal')
+          ->set_required(false),
       ]);
 
     // Drivers
