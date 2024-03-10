@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search)
     const data = new FormData();
           data.append( 'action', 'booking_summary' );
+          data.append( 'payment_method', document.querySelector('input[name="payment-method"]:checked').value);
           data.append( 'nonce', event.target.dataset.nonce );
           data.append( 'search', urlParams.get( 'search' ) );
 

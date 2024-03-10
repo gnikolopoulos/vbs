@@ -54,6 +54,18 @@
       </li>
     </ul>
 
+    <h3><?php echo __('Payment Method', 'vbs' ); ?></h3>
+    <div class="payment-methods-container">
+      <?php foreach ($helper->getPaymentMethods() as $method): ?>
+        <div class="payment-method-info">
+          <input type="radio" id="<?php echo $method['id']; ?>" value="<?php echo $method['title']; ?>" name="payment-method">
+          <label for="<?php echo $method['id']; ?>" aria-label="<?php echo $method['title']; ?>">
+            <?php echo file_get_contents( $method['icon'] ); ?>
+          </label>
+        </div>
+      <?php endforeach; ?>
+    </div>
+
     <div class="actions">
       <a class="back" href="#"><?php echo __( '&larr; Back', 'vbs' ); ?></a>
       <a class="book_now_btn" data-nonce="<?php echo $nonce; ?>" href="#"><?php echo __( 'Make Booking', 'vbs' ); ?></a>

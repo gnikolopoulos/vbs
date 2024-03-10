@@ -267,23 +267,26 @@ class Vbs_Helper
 
     if (carbon_get_theme_option('cash_enabled') == 'yes') {
       $methods[] = [
+        'id' => 'cash',
         'title' => carbon_get_theme_option('cash_title'),
-        'description' => carbon_get_theme_option('cash_description'),
-      ]
+        'icon' => VBS_BASE_PATH . 'public/img/icons/cash.svg',
+      ];
     }
 
     if (carbon_get_theme_option('cc_enabled') == 'yes') {
       $methods[] = [
+        'id' => 'cc',
         'title' => carbon_get_theme_option('cc_title'),
-        'description' => carbon_get_theme_option('cc_description'),
-      ]
+        'icon' => VBS_BASE_PATH . 'public/img/icons/credit-card.svg',
+      ];
     }
 
     if (carbon_get_theme_option('paypal_enabled') == 'yes') {
       $methods[] = [
-        'title' => carbon_get_theme_option('paypaltitle'),
-        'description' => carbon_get_theme_option('paypal_description'),
-      ]
+        'id' => 'paypal',
+        'title' => carbon_get_theme_option('paypal_title'),
+        'icon' => VBS_BASE_PATH . 'public/img/icons/paypal.svg',
+      ];
     }
 
     return $methods;

@@ -6,6 +6,41 @@
   font-weight: 700;
 }
 
+.booking_summary_container .payment-methods-container {
+  display: flex;
+  margin: 0 0 20px 0;
+}
+
+.booking_summary_container .payment-methods-container .payment-method-info {
+  flex: 1;
+}
+
+.booking_summary_container .payment-methods-container .payment-method-info input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.booking_summary_container .payment-methods-container .payment-method-info label {
+  display: block;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.booking_summary_container .payment-methods-container .payment-method-info input:checked ~ label {
+  background-color: #000;
+  color: #fff
+}
+
+.booking_summary_container .payment-methods-container .payment-method-info input:checked ~ label svg {
+  fill: #fff
+}
+
 .booking_summary_container .actions a {
   text-decoration: none;
   padding: 20px 60px;

@@ -201,6 +201,25 @@ class Vbs_Public
   }
 
   /**
+   * Render the booking summary shortcode
+   *
+   * @since    1.0.0
+   *
+   * @param    array    $atts    Shortcode attributes, if any
+   *
+   * @return   void
+   */
+  public function booking_summary( $atts )
+  {
+    $helper = new Vbs_Helper( $this->plugin_name, $this->version );
+    $transient_data = get_transient( get_query_var( 'search' ) );
+
+    ob_start();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_summary.php';
+    return ob_get_clean();
+  }
+
+  /**
    * Render the booking confirmation shortcode
    *
    * @since    1.0.0
@@ -215,25 +234,6 @@ class Vbs_Public
 
   	ob_start();
   	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_confirmation.php';
-  	return ob_get_clean();
-  }
-
-  /**
-   * Render the booking summary shortcode
-   *
-   * @since    1.0.0
-   *
-   * @param    array    $atts    Shortcode attributes, if any
-   *
-   * @return   void
-   */
-  public function booking_summary( $atts )
-  {
-  	$helper = new Vbs_Helper( $this->plugin_name, $this->version );
-  	$transient_data = get_transient( get_query_var( 'search' ) );
-
-  	ob_start();
-  	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_summary.php';
   	return ob_get_clean();
   }
 
@@ -437,7 +437,7 @@ class Vbs_Public
 
    	$transient_data = array_merge( $transient_data, [
    		'total_cost' => (float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost'],
-   		'payment_method' => 'cash',
+   		'payment_method' => $_POST['payment_method'],
    	] );
 
    	// Update the transient
