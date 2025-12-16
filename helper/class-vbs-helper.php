@@ -273,10 +273,10 @@ class Vbs_Helper
       ];
     }
 
-    if (carbon_get_theme_option('cc_enabled') == 'yes') {
+    if (carbon_get_theme_option('stripe_enabled') == 'yes') {
       $methods[] = [
-        'id' => 'cc',
-        'title' => carbon_get_theme_option('cc_title'),
+        'id' => 'stripe',
+        'title' => carbon_get_theme_option('stripe_title'),
         'icon' => VBS_BASE_PATH . 'public/img/icons/credit-card.svg',
       ];
     }

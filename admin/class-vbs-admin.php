@@ -226,24 +226,20 @@ class Vbs_Admin
           ->set_default_value('Cash')
           ->set_required(false),
       ])
-      ->add_tab( __( 'Credit Card', 'vbs' ), [
-        Field::make( 'checkbox', 'cc_enabled', __( 'Enabled', 'vbs' ) )
+      ->add_tab( __( 'Stripe', 'vbs' ), [
+        Field::make( 'checkbox', 'stripe_enabled', __( 'Enabled', 'vbs' ) )
           ->set_option_value('yes'),
-        Field::make( 'text', 'cc_title', __( 'Title', 'vbs' ) )
+        Field::make( 'text', 'stripe_title', __( 'Title', 'vbs' ) )
           ->set_default_value('Credit/Debit Card')
           ->set_required(true),
-        Field::make( 'text', 'cc_description', __( 'Description', 'vbs' ) )
+        Field::make( 'text', 'stripe_description', __( 'Description', 'vbs' ) )
           ->set_default_value('Credit/Debit Card')
-          ->set_required(false),
-        Field::make( 'text', 'cc_mid', __( 'Merchant ID', 'vbs' ) )
-          ->set_required(false),
-        Field::make( 'text', 'cc_api_key', __( 'API Key', 'vbs' ) )
-          ->set_required(false),
-        Field::make( 'text', 'cc_cid', __( 'Client ID', 'vbs' ) )
-          ->set_required(false),
-        Field::make( 'text', 'cc_source_code', __( 'Source Code', 'vbs' ) )
-          ->set_required(false),
-        Field::make( 'select', 'cc_environment', __( 'Environment', 'vbs' ) )
+          ->set_required(true),
+        Field::make( 'text', 'stripe_pkey', __( 'Stripe Publishable Key', 'vbs' ) )
+          ->set_required(true),
+        Field::make( 'text', 'stripe_skey', __( 'Stripe Secret Key', 'vbs' ) )
+          ->set_required(true),
+        Field::make( 'select', 'stripe_environment', __( 'Environment', 'vbs' ) )
           ->set_options([
             'demo' => __('Demo', 'vbs'),
             'live' => __('Live', 'vbs'),
@@ -258,7 +254,10 @@ class Vbs_Admin
           ->set_required(true),
         Field::make( 'text', 'paypal_description', __( 'Description', 'vbs' ) )
           ->set_default_value('PayPal')
-          ->set_required(false),
+          ->set_required(true),
+        Field::make( 'text', 'paypal_email', __( 'PayPal Email', 'vbs' ) )
+          ->set_default_value('example@example.com')
+          ->set_required(true),
       ]);
 
     // Drivers
@@ -410,8 +409,7 @@ class Vbs_Admin
           ->set_picker_options([
             'altInput' => true,
             'enableTime' => true,
-            'minDate' => date("Y-m-d H:i:s"),
-            'dateFormat' => 'Y-m-d H:i:s',
+            'dateFormat' => 'F m, Y H:i:s',
             'minuteIncrement' => 15,
           ]),
         Field::make( 'text', 'pickup_address', __( 'Pickup Address', 'vbs' ) )
@@ -430,8 +428,7 @@ class Vbs_Admin
         	->set_picker_options([
             'altInput' => true,
             'enableTime' => true,
-            'minDate' => date("Y-m-d H:i:s"),
-            'dateFormat' => 'Y-m-d H:i:s',
+            'dateFormat' => 'F m, Y H:i:s',
             'minuteIncrement' => 15,
           ])
         	->set_conditional_logic([

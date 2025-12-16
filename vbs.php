@@ -23,6 +23,7 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       vbs
  * Domain Path:       /languages
+ * Requires Plugins:  carbon-fields
  */
 
 // If this file is called directly, abort.

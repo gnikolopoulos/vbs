@@ -1,21 +1,33 @@
-.booking_summary_container ul {
+.booking_summary_container {
+  display: flex;
+}
+
+.booking_summary_container .summary_container {
+  flex: 2 1 0;
+}
+
+.booking_summary_container .summary_container ul {
   list-style-type: none;
 }
 
-.booking_summary_container ul li span {
+.booking_summary_container .summary_container ul li span {
   font-weight: 700;
 }
 
-.booking_summary_container .payment-methods-container {
+.booking_summary_container .payment_container {
+  flex: 1 1 0;
+}
+
+.booking_summary_container .payment_container .payment-methods-container {
   display: flex;
   margin: 0 0 20px 0;
 }
 
-.booking_summary_container .payment-methods-container .payment-method-info {
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info {
   flex: 1;
 }
 
-.booking_summary_container .payment-methods-container .payment-method-info input {
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info input {
   border: 0;
   clip: rect(0 0 0 0);
   height: 1px;
@@ -26,22 +38,22 @@
   width: 1px;
 }
 
-.booking_summary_container .payment-methods-container .payment-method-info label {
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info label {
   display: block;
   text-align: center;
   border-radius: 5px;
 }
 
-.booking_summary_container .payment-methods-container .payment-method-info input:checked ~ label {
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info input:checked ~ label {
   background-color: #000;
   color: #fff
 }
 
-.booking_summary_container .payment-methods-container .payment-method-info input:checked ~ label svg {
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info input:checked ~ label svg {
   fill: #fff
 }
 
-.booking_summary_container .actions a {
+.booking_summary_container .payment_container .actions a {
   text-decoration: none;
   padding: 20px 60px;
   background: #333;
@@ -51,10 +63,10 @@
   border-radius: 5px;
 }
 
-.booking_summary_container .actions a.back {
+.booking_summary_container .payment_container .actions a.back {
   float: left;
 }
 
-.booking_summary_container .actions a.book_now_btn {
+.booking_summary_container .payment_container .actions a.book_now_btn {
   float: right;
 }

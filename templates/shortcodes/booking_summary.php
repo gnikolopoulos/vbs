@@ -53,7 +53,9 @@
         <?php echo $helper->formatPrice((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost']); ?>
       </li>
     </ul>
+  </div>
 
+  <div class="payment_container">
     <h3><?php echo __('Payment Method', 'vbs' ); ?></h3>
     <div class="payment-methods-container">
       <?php foreach ($helper->getPaymentMethods() as $method): ?>
