@@ -224,6 +224,9 @@ class Vbs
 
 		$this->loader->add_action( 'wp_ajax_booking_summary', $plugin_public, 'summary' );
 		$this->loader->add_action( 'wp_ajax_nopriv_booking_summary', $plugin_public, 'summary' );
+
+		$this->loader->add_action( 'wp_ajax_payment_intent', $plugin_public, 'payment_intent' );
+		$this->loader->add_action( 'wp_ajax_nopriv_payment_intent', $plugin_public, 'payment_intent' );
 	}
 
 	/**

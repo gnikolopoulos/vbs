@@ -166,8 +166,8 @@ class Vbs_Admin
           ->set_help_text( __('https://developers.google.com/maps/documentation/places/web-service/get-api-key') ),
         Field::make( 'select', 'currency', __( 'Default currency', 'vbs' ) )
           ->set_options([
-            '€' => 'Euro',
-            '$' => 'United States Dollar',
+            'eur' => 'Euro',
+            'usd' => 'United States Dollar',
           ])
           ->set_default_value('€'),
       ])
@@ -916,7 +916,7 @@ class Vbs_Admin
   			echo sprintf('%s %s', carbon_get_post_meta($post_id, 'first_name'), carbon_get_post_meta($post_id, 'last_name'));
   			break;
   		case 'cost':
-  			echo sprintf('%s %.2f', carbon_get_theme_option('currency'), carbon_get_post_meta($post_id, 'total_cost'));
+  			echo sprintf('%s %.2f', strtoupper(carbon_get_theme_option('currency')), carbon_get_post_meta($post_id, 'total_cost'));
   			break;
   		default:
   			break;

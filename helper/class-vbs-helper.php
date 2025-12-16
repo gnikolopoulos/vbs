@@ -252,7 +252,7 @@ class Vbs_Helper
    */
   public function formatPrice( float $price )
   {
-    return carbon_get_theme_option( 'currency' ) . ' ' . number_format( $price, 2, ',', '' );
+    return strtoupper(carbon_get_theme_option( 'currency' )) . ' ' . number_format( $price, 2, ',', '' );
   }
 
   /**
@@ -269,6 +269,7 @@ class Vbs_Helper
       $methods[] = [
         'id' => 'cash',
         'title' => carbon_get_theme_option('cash_title'),
+        'description' => carbon_get_theme_option('cash_description'),
         'icon' => VBS_BASE_PATH . 'public/img/icons/cash.svg',
       ];
     }
@@ -277,6 +278,7 @@ class Vbs_Helper
       $methods[] = [
         'id' => 'stripe',
         'title' => carbon_get_theme_option('stripe_title'),
+        'description' => carbon_get_theme_option('stripe_description'),
         'icon' => VBS_BASE_PATH . 'public/img/icons/credit-card.svg',
       ];
     }
@@ -285,6 +287,7 @@ class Vbs_Helper
       $methods[] = [
         'id' => 'paypal',
         'title' => carbon_get_theme_option('paypal_title'),
+        'description' => carbon_get_theme_option('paypal_description'),
         'icon' => VBS_BASE_PATH . 'public/img/icons/paypal.svg',
       ];
     }

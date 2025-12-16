@@ -20,37 +20,37 @@
 
 .booking_summary_container .payment_container .payment-methods-container {
   display: flex;
+  flex-direction: column;
   margin: 0 0 20px 0;
 }
 
 .booking_summary_container .payment_container .payment-methods-container .payment-method-info {
-  flex: 1;
+  display: flex;
+  align-items: start;
+  margin-bottom: 15px;
 }
 
-.booking_summary_container .payment_container .payment-methods-container .payment-method-info input {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info > span {
+  height: 24px;
 }
 
 .booking_summary_container .payment_container .payment-methods-container .payment-method-info label {
   display: block;
-  text-align: center;
-  border-radius: 5px;
+  line-height: 1;
 }
 
-.booking_summary_container .payment_container .payment-methods-container .payment-method-info input:checked ~ label {
-  background-color: #000;
-  color: #fff
+.booking_summary_container .payment_container .payment-methods-container .payment-method-info label span {
+  display: block;
+  font-size: 70%;
 }
 
-.booking_summary_container .payment_container .payment-methods-container .payment-method-info input:checked ~ label svg {
-  fill: #fff
+.booking_summary_container .payment_container #form_container {
+  margin: 20px 0;
+}
+
+.booking_summary_container .payment_container .actions {
+  display: flex;
+  justify-content: space-between;
 }
 
 .booking_summary_container .payment_container .actions a {
@@ -61,12 +61,4 @@
   font-size: 17px;
   font-weight: 700;
   border-radius: 5px;
-}
-
-.booking_summary_container .payment_container .actions a.back {
-  float: left;
-}
-
-.booking_summary_container .payment_container .actions a.book_now_btn {
-  float: right;
 }

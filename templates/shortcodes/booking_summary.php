@@ -61,12 +61,20 @@
       <?php foreach ($helper->getPaymentMethods() as $method): ?>
         <div class="payment-method-info">
           <input type="radio" id="<?php echo $method['id']; ?>" value="<?php echo $method['title']; ?>" name="payment-method">
-          <label for="<?php echo $method['id']; ?>" aria-label="<?php echo $method['title']; ?>">
+          <span>
             <?php echo file_get_contents( $method['icon'] ); ?>
+          </span>
+          <label for="<?php echo $method['id']; ?>" aria-label="<?php echo $method['title']; ?>">
+            <?php echo $method['title']; ?>
+            <span>
+              <?php echo $method['description']; ?>
+            </span>
           </label>
         </div>
       <?php endforeach; ?>
     </div>
+
+    <div id="form_container"></div>
 
     <div class="actions">
       <a class="back" href="#"><?php echo __( '&larr; Back', 'vbs' ); ?></a>

@@ -3,7 +3,7 @@
 ?>
 <form id="vbs_booking_form" class="booking_form_container">
   <input type="hidden" name="uuid" id="uuid" value="<?php echo wp_generate_uuid4(); ?>" />
-  <input type="hidden" name="nonce" id="nonce" value="<?php echo wp_create_nonce('initiate_search_nonce'); ?>" />
+  <?php wp_nonce_field( 'initiate_search_nonce', 'nonce', false ); ?>
   <div class="container_row">
     <div class="container_column">
       <fieldset>

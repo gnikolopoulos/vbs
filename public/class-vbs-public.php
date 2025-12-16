@@ -117,8 +117,14 @@ class Vbs_Public
 		}
 
 		if (is_page(carbon_get_theme_option( 'summary_page' ))) {
+      wp_enqueue_script( 'stripe-js', 'https://js.stripe.com/clover/stripe.js', [], '', true );
+
 			wp_register_script( 'vbs-booking-summary-block', plugin_dir_url( __FILE__ ) . 'js/vbs-booking-summary-block.js', [], $this->version, true );
-			wp_localize_script( 'vbs-booking-summary-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+			wp_localize_script( 'vbs-booking-summary-block', 'wp_data', [
+        'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'stripe_pk' => carbon_get_theme_option('stripe_pkey'),
+        'stripe_sk' => carbon_get_theme_option('stripe_skey'),
+      ]);
 			wp_enqueue_script( 'vbs-booking-summary-block' );
 		}
 	}
@@ -224,13 +230,12 @@ class Vbs_Public
    *
    * @since    1.0.0
    *
-   * @param    array    $atts    Shortcode attributes, if any
-   *
    * @return   void
    */
-  public function booking_confirmation( $atts )
+  public function booking_confirmation()
   {
   	$transient_data = get_transient( get_query_var( 'search' ) );
+    delete_transient(get_query_var( 'search' ));
 
   	ob_start();
   	require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_confirmation.php';
@@ -254,7 +259,7 @@ class Vbs_Public
 
    	date_default_timezone_set( wp_timezone_string() );
    	$transient_data = [
-   		'id' => $_POST['nonce'],
+   		'id' => substr($_POST['uuid'], 0, 8),
    		'pickup_type' => $_POST['pickup_type'],
    		'pickup' => $_POST['pickup_type'] == 'location' ? array_intersect_key(carbon_get_post_meta( $_POST['pickup_location'], 'address' ), array_flip(['lat', 'lng', 'address'])) : [
    			'address' => $_POST['pickup'],
@@ -493,6 +498,58 @@ class Vbs_Public
    	];
 
    	echo json_encode($return_data);
+    die();
+  }
+
+  /**
+   * Function that creates a Stripe Payment Intent
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function payment_intent()
+  {
+    $transient_data = get_transient( $_POST['search'] );
+    if ( !$transient_data ) {
+      echo json_encode([
+        'result' => false,
+        'reason' => 'transient not found',
+      ]);
+      die();
+    }
+
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'lib/stripe/init.php';
+
+    $stripe = new \Stripe\StripeClient(carbon_get_theme_option('stripe_skey'));
+
+    $customer = $stripe->customers->create([
+      'name' => $transient_data['customer']['first_name'] . ' ' . $transient_data['customer']['last_name'],
+      'email' => $transient_data['customer']['email'],
+      'phone' => $transient_data['customer']['phone'] ?: $transient_data['customer']['mobile'],
+    ]);
+
+    $paymentIntent = $stripe->paymentIntents->create([
+      'amount' => ((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost']) * 100,
+      'currency' => carbon_get_theme_option('currency'),
+      'customer' => $customer->id,
+      'automatic_payment_methods' => ['enabled' => true],
+    ]);
+
+    if (!$paymentIntent) {
+      echo json_encode([
+        'result' => false,
+        'reason' => 'could not create payment intent',
+      ]);
+      die();
+    }
+
+    $return_data = [
+      'result' => true,
+      'key' => $paymentIntent->client_secret,
+    ];
+
+    echo json_encode($return_data);
     die();
   }
 
