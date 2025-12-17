@@ -19,4 +19,6 @@
       </div>
     </div>
   <?php endforeach; ?>
+
+  <a class="skip_btn" data-nonce="<?php echo $nonce; ?>" data-addon="0" href="#"><?php echo __( 'Skip', 'vbs' ); ?></a>
 </div>

@@ -68,7 +68,8 @@
   margin: 0;
 }
 
-a.book_now_btn {
+a.book_now_btn,
+a.skip_btn {
   color: #fff !important;
   text-transform: uppercase;
   text-decoration: none;
@@ -76,6 +77,10 @@ a.book_now_btn {
   padding: 15px 30px;
   border-radius: 3px;
   text-align: center;
+}
+
+a.skip_btn {
+  float: right;
 }
 
 @media (max-width: 900px) {

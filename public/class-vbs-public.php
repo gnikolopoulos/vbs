@@ -355,10 +355,9 @@ class Vbs_Public
     	die();
    	}
 
-   	$helper = new Vbs_Helper();
    	$transient_data = array_merge( $transient_data, [
    		'addon' => (int)$_POST['addon'],
-   		'addon_cost' => (float)carbon_get_post_meta( (int)$_POST['addon'], 'cost' )
+   		'addon_cost' => (int)$_POST['addon'] !== 0 ? (float)carbon_get_post_meta( (int)$_POST['addon'], 'cost' ) : 0,
    	] );
 
    	// Update the transient
@@ -533,7 +532,13 @@ class Vbs_Public
       'amount' => ((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost']) * 100,
       'currency' => carbon_get_theme_option('currency'),
       'customer' => $customer->id,
-      'automatic_payment_methods' => ['enabled' => true],
+      'payment_method_types' => [
+        'card',
+        'link',
+        'klarna',
+        'paypal',
+        'revolut_pay',
+      ],
     ]);
 
     if (!$paymentIntent) {

@@ -79,6 +79,7 @@
   border-width: 0 0 2px 0;
   border-color: #333;
   border-style: solid;
+  font-family: inherit;
 }
 
 .error .form-input {

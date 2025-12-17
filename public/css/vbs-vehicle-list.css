@@ -88,7 +88,7 @@
 }
 
 .vehicle_container .actions {
-  flex-basis: 15%;
+  flex-basis: 30%;
   background: #eee;
   display: flex;
   flex-direction: column;

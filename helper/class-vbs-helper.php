@@ -252,7 +252,18 @@ class Vbs_Helper
    */
   public function formatPrice( float $price )
   {
-    return strtoupper(carbon_get_theme_option( 'currency' )) . ' ' . number_format( $price, 2, ',', '' );
+    $symbol = '$';
+    switch (carbon_get_theme_option( 'currency' )) {
+      case 'eur':
+        $symbol = '€';
+        break;
+      case 'usd':
+        $symbol = '$';
+        break;
+      default:
+        break;
+    }
+    return sprintf('%s%s', $symbol, number_format($price, 2, ',', ''));
   }
 
   /**
