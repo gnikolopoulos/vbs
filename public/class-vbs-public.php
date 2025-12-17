@@ -122,11 +122,18 @@ class Vbs_Public
 			wp_register_script( 'vbs-booking-summary-block', plugin_dir_url( __FILE__ ) . 'js/vbs-booking-summary-block.js', [], $this->version, true );
 			wp_localize_script( 'vbs-booking-summary-block', 'wp_data', [
         'ajaxurl' => admin_url( 'admin-ajax.php' ),
+        'return_url' => get_page_link( carbon_get_theme_option('pending_page') ),
         'stripe_pk' => carbon_get_theme_option('stripe_pkey'),
         'stripe_sk' => carbon_get_theme_option('stripe_skey'),
       ]);
 			wp_enqueue_script( 'vbs-booking-summary-block' );
 		}
+
+    if (is_page(carbon_get_theme_option( 'pending_page' ))) {
+      wp_register_script( 'vbs-payment-pending-block', plugin_dir_url( __FILE__ ) . 'js/vbs-payment-pending-block.js', [], $this->version, true );
+      wp_localize_script( 'vbs-payment-pending-block', 'wp_ajax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+      wp_enqueue_script( 'vbs-payment-pending-block' );
+    }
 	}
 
   /**
@@ -222,6 +229,23 @@ class Vbs_Public
 
     ob_start();
     require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/booking_summary.php';
+    return ob_get_clean();
+  }
+
+  /**
+   * Render the payment pending shortcode
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function payment_pending()
+  {
+    $transient_data = get_transient( get_query_var( 'search' ) );
+    delete_transient(get_query_var( 'search' ));
+
+    ob_start();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/shortcodes/payment_pending.php';
     return ob_get_clean();
   }
 
@@ -541,6 +565,7 @@ class Vbs_Public
       ],
       'metadata' => [
         'booking_id' => $transient_data['id'],
+        'session_id' => $_POST['search'],
       ],
     ]);
 
@@ -568,6 +593,44 @@ class Vbs_Public
       'result' => true,
       'key' => $paymentIntent->client_secret,
     ];
+
+    echo json_encode($return_data);
+    die();
+  }
+
+  /**
+   * Function that checks a Stripe Payment Intent
+   *
+   * @since    1.0.0
+   *
+   * @return   void
+   */
+  public function check_payment()
+  {
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'lib/stripe/init.php';
+
+    $stripe = new \Stripe\StripeClient(carbon_get_theme_option('stripe_skey'));
+    $paymentIntent = $stripe->paymentIntents->retrieve(
+      $_POST['intent'],
+      []
+    );
+
+    $return_data = [];
+    switch ($paymentIntent->status) {
+      case 'succeeded':
+        $return_data = [
+          'result' => true,
+          'session_id' => $paymentIntent->metadata->session_id,
+        ];
+        break;
+
+      default:
+        $return_data = [
+          'result' => false,
+          'redirect' => get_page_link( carbon_get_theme_option( 'summary_page' ) ) . '?search=' . $paymentIntent->metadata->session_id,
+        ];
+        break;
+    }
 
     echo json_encode($return_data);
     die();

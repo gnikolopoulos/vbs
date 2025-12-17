@@ -209,6 +209,7 @@ class Vbs
 		$this->loader->add_shortcode( 'vbs_customer_information', $plugin_public, 'customer_information' );
 		$this->loader->add_shortcode( 'vbs_booking_summary', $plugin_public, 'booking_summary' );
 		$this->loader->add_shortcode( 'vbs_booking_confirmation', $plugin_public, 'booking_confirmation');
+		$this->loader->add_shortcode( 'vbs_payment_pending', $plugin_public, 'payment_pending');
 
 		$this->loader->add_action( 'wp_ajax_initiate_search', $plugin_public, 'initiate_search' );
 		$this->loader->add_action( 'wp_ajax_nopriv_initiate_search', $plugin_public, 'initiate_search' );
@@ -227,6 +228,9 @@ class Vbs
 
 		$this->loader->add_action( 'wp_ajax_payment_intent', $plugin_public, 'payment_intent' );
 		$this->loader->add_action( 'wp_ajax_nopriv_payment_intent', $plugin_public, 'payment_intent' );
+
+		$this->loader->add_action( 'wp_ajax_check_payment', $plugin_public, 'check_payment' );
+		$this->loader->add_action( 'wp_ajax_nopriv_check_payment', $plugin_public, 'check_payment' );
 	}
 
 	/**

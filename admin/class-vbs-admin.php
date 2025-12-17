@@ -180,6 +180,8 @@ class Vbs_Admin
           ->set_options(['Vbs_Helper', 'getPages']),
         Field::make( 'select', 'summary_page', __( 'Page that contains the booking summary shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
+        Field::make( 'select', 'pending_page', __( 'Page that contains the payment pending shortcode', 'vbs' ) )
+          ->set_options(['Vbs_Helper', 'getPages']),
         Field::make( 'select', 'confirmation_page', __( 'Page that contains the booking confirmation shortcode', 'vbs' ) )
           ->set_options(['Vbs_Helper', 'getPages']),
       ])

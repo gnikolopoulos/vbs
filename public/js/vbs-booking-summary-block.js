@@ -11,7 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
         confirm: function (nonce) {
           stripe.confirmPayment({
             elements,
-            redirect: 'if_required'
+            redirect: 'if_required',
+            confirmParams: {
+              return_url: wp_data.return_url
+            }
           })
           .then(function (result) {
             if (result.error) {
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const urlParams = new URLSearchParams(window.location.search)
+    const urlParams = new URLSearchParams(window.location.search);
     const data = new FormData();
           data.append( 'action', 'payment_intent' );
           data.append( 'search', urlParams.get( 'search' ) );
