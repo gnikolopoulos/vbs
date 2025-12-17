@@ -539,6 +539,9 @@ class Vbs_Public
         'paypal',
         'revolut_pay',
       ],
+      'metadata' => [
+        'booking_id' => $transient_data['id'],
+      ],
     ]);
 
     if (!$paymentIntent) {
@@ -548,6 +551,18 @@ class Vbs_Public
       ]);
       die();
     }
+
+    $transient_data = array_merge( $transient_data, [
+      'stripe' => [
+        'payment_intent' => [
+          'id' => $paymentIntent->id,
+          'secret' => $paymentIntent->client_secret,
+        ],
+      ],
+    ] );
+
+    // Update the transient
+    set_transient( $_POST['search'], $transient_data, 2 * HOUR_IN_SECONDS );
 
     $return_data = [
       'result' => true,
