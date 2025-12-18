@@ -32,7 +32,7 @@ class Vbs_Helper
   }
 
   /**
-   * Returns an array of key => value pairs of all drivers
+   * Returns an array of key => value pairs of all active drivers
    *
    * @since    1.0.0
    * @return   array
@@ -45,13 +45,19 @@ class Vbs_Helper
       'posts_per_page' => -1,
       'orderby' => 'title',
       'order' => 'ASC',
+      'meta_query' => [
+        [
+          'key' => '_active',
+          'value' => 'yes',
+        ],
+      ],
     ];
 
     return array_column(get_posts( $args ), 'post_title', 'ID');
   }
 
   /**
-   * Returns an array of key => value pairs of all vehicles
+   * Returns an array of key => value pairs of all active vehicles
    *
    * @since    1.0.0
    * @return   array
@@ -64,13 +70,19 @@ class Vbs_Helper
       'posts_per_page' => -1,
       'orderby' => 'title',
       'order' => 'ASC',
+      'meta_query' => [
+        [
+          'key' => '_active',
+          'value' => 'yes',
+        ],
+      ],
     ];
 
     return array_column(get_posts( $args ), 'post_title', 'ID');
   }
 
   /**
-   * Returns an array of key => value pairs of all addons
+   * Returns an array of key => value pairs of all active addons
    *
    * @since    1.0.0
    *
@@ -100,7 +112,7 @@ class Vbs_Helper
   }
 
   /**
-   * Returns an array of key => value pairs of all locations
+   * Returns an array of key => value pairs of all active locations
    *
    * @since    1.0.0
    * @return   array
@@ -113,6 +125,12 @@ class Vbs_Helper
       'posts_per_page' => -1,
       'orderby' => 'title',
       'order' => 'ASC',
+      'meta_query' => [
+        [
+          'key' => '_active',
+          'value' => 'yes',
+        ],
+      ],
     ];
 
     return array_column(get_posts( $args ), 'post_title', 'ID');
