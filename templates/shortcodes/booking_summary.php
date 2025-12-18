@@ -49,9 +49,23 @@
         <?php echo $helper->formatPrice((float)$transient_data['addon_cost']); ?>
       </li>
       <li>
-        <span><?php echo __( 'Total', 'vbs' ); ?>: </span>
-        <?php echo $helper->formatPrice((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost']); ?>
+        <span><?php echo __( 'Surcharge Cost', 'vbs' ); ?>: </span>
+        <?php echo $helper->formatPrice((float)$transient_data['surcharge_cost']); ?>
       </li>
+      <li>
+        <span><?php echo __( 'Total', 'vbs' ); ?>: </span>
+        <?php echo $helper->formatPrice((float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost'] + (float)$transient_data['surcharge_cost']); ?>
+      </li>
+    </ul>
+
+    <h3><?php echo __( 'Surcharge Breakdown', 'vbs' ); ?></h3>
+    <ul class="cost">
+      <?php foreach ($transient_data['surcharge_data'] as $item): ?>
+        <li>
+          <span><?php echo $item['title']; ?>: </span>
+          <?php echo $helper->formatPrice((float)$item['cost']); ?>
+        </li>
+      <?php endforeach; ?>
     </ul>
   </div>
 

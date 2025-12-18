@@ -305,6 +305,27 @@ class Vbs_Public
    	$helper = new Vbs_Helper();
    	$transient_data['available_cars'] = array_column($helper->getAvailableVehicles($transient_data), 'ID');
 
+    $transient_data['surcharge_cost'] = 0;
+    $transient_data['surcharge_data'] = [];
+
+    if ($transient_data['pickup_type'] == 'location') {
+      $pickup_location_surcharges = $helper->calculateLocationSurchargeCost((int)$_POST['pickup_location']);
+      $transient_data['surcharge_cost'] += $pickup_location_surcharges['total'];
+      $transient_data['surcharge_data'] = array_merge($transient_data['surcharge_data'], $pickup_location_surcharges['data'] ?: []);
+    }
+
+    if ($transient_data['dropoff_type'] == 'location') {
+      $dropoff_location_surcharges = $helper->calculateLocationSurchargeCost((int)$_POST['dropoff_location']);
+      $transient_data['surcharge_cost'] += $dropoff_location_surcharges['total'];
+      $transient_data['surcharge_data'] = array_merge($transient_data['surcharge_data'], $dropoff_location_surcharges['data'] ?: []);
+    }
+
+    $date_surcharges = $helper->calculateDateSurchargeCost($_POST['pickup_datetime'], $_POST['return_datetime']);
+    $transient_data['surcharge_cost'] += $date_surcharges['total'];
+    $transient_data['surcharge_data'] = array_merge($transient_data['surcharge_data'], $date_surcharges['data']);
+
+    error_log(print_r($transient_data, true));
+
    	// Set the transient
    	set_transient( $_POST['uuid'], $transient_data, 2 * HOUR_IN_SECONDS );
 
@@ -464,7 +485,7 @@ class Vbs_Public
    	}
 
    	$transient_data = array_merge( $transient_data, [
-   		'total_cost' => (float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost'],
+   		'total_cost' => (float)$transient_data['vehicle_cost'] + (float)$transient_data['addon_cost'] + (float)$transient_data['surcharge_cost'],
    		'payment_method' => $_POST['payment_method'],
    	] );
 
@@ -487,7 +508,7 @@ class Vbs_Public
    			'_distance' => $transient_data['distance'],
    			'_disctance_cost' => $transient_data['vehicle_cost'],
    			'_addons_cost' => $transient_data['addon_cost'],
-   			'_surcharge_cost' => '',
+   			'_surcharge_cost' => $transient_data['surcharge_cost'],
    			'_total_cost' => $transient_data['total_cost'],
    			'_vehicle' => $transient_data['vehicle'],
    			'_persons' => $transient_data['passengers'],

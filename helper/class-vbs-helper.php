@@ -262,6 +262,75 @@ class Vbs_Helper
   }
 
   /**
+   * Calculate surcharges based on given location ID
+   *
+   * @since   1.0.0
+   *
+   * @param   int    $location_id    Location id to look for surcharges
+   * @return  array
+   */
+  public function calculateLocationSurchargeCost( int $location_id)
+  {
+    $total_surcharge_cost = 0;
+    $surcharge_data = [];
+
+    $location_surcharges = $this->getSurchargesForLocation($location_id);
+    foreach ($location_surcharges as $id => $name) {
+      $cost = carbon_get_post_meta($id, 'cost');
+      $total_surcharge_cost += $cost;
+      $surcharge_data['data'][] = [
+        'title' => $name,
+        'cost' => $cost,
+      ];
+    }
+
+    $surcharge_data['total'] = $total_surcharge_cost;
+
+    return $surcharge_data;
+  }
+
+  /**
+   * Calulate surcharges based on pickup and return dates
+   *
+   * @since    1.0.0
+   *
+   * @param    string         $pickup_date    Pickup date
+   * @param    string|null    $return_date    Return date
+   * @return   array
+   */
+  public function calculateDateSurchargeCost( string $pickup_date, string $return_date = null)
+  {
+    $total_surcharge_cost = 0;
+    $surcharge_data = [];
+
+    $pickup_date_surcharges = $this->getSurchargesForDate($pickup_date);
+    foreach ($pickup_date_surcharges as $id => $name) {
+      $cost = carbon_get_post_meta($id, 'cost');
+      $total_surcharge_cost += $cost;
+      $surcharge_data['data'][] = [
+        'title' => $name,
+        'cost' => $cost,
+      ];
+    }
+
+    if ($return_date) {
+      $return_date_surcharges = $this->getSurchargesForDate($return_date);
+      foreach ($return_date_surcharges as $id => $name) {
+        $cost = carbon_get_post_meta($id, 'cost');
+        $total_surcharge_cost += $cost;
+        $surcharge_data['data'][] = [
+          'title' => $name,
+          'cost' => $cost,
+        ];
+      }
+    }
+
+    $surcharge_data['total'] = $total_surcharge_cost;
+
+    return $surcharge_data;
+  }
+
+  /**
    * Display the given price based on settings
    *
    * @since    1.0.0
@@ -322,6 +391,83 @@ class Vbs_Helper
     }
 
     return $methods;
+  }
+
+  /**
+   * Returns an array of key => value pairs of all active surcharges for a given location
+   *
+   * @since    1.0.0
+   *
+   * @param    int    $location_id    The id of the location to get surcharges for
+   * @return   array
+   */
+  private function getSurchargesForLocation( int $location_id )
+  {
+    $args = [
+      'post_type' => 'surcharge',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'orderby' => 'title',
+      'order' => 'ASC',
+      'meta_query' => [
+        [
+          'key' => '_type',
+          'value' => 'location',
+        ],
+        [
+          'value' => 'post:location:' . $location_id,
+        ],
+        [
+          'key' => '_active',
+          'value' => 'yes',
+        ],
+      ],
+    ];
+
+    return array_column(get_posts( $args ), 'post_title', 'ID');
+  }
+
+  /**
+   * Returns an array of key => value pairs of all active surcharges for a given date
+   *
+   * @since    1.0.0
+   *
+   * @param    string    $date    The date to check for surcharges
+   * @return   array
+   */
+  private function getSurchargesForDate( string $date )
+  {
+    $args = [
+      'post_type' => 'surcharge',
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'orderby' => 'title',
+      'order' => 'ASC',
+      'meta_query' => [
+        [
+          'key' => '_type',
+          'value' => 'date',
+        ],
+        [
+          'key' => '_active',
+          'value' => 'yes',
+        ],
+        [
+          'key' => '_date_from',
+          'value' => date('Y-m-d', strtotime($date)),
+          'compare' => '<=',
+          'type' => 'DATE'
+        ],
+        [
+          'key' => '_date_to',
+          'value' => date('Y-m-d', strtotime($date)),
+          'compare' => '>=',
+          'type' => 'DATE'
+        ],
+      ],
+    ];
+
+    return array_column(get_posts( $args ), 'post_title', 'ID');
   }
 
 }
