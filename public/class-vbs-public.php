@@ -322,7 +322,7 @@ class Vbs_Public
 
     $date_surcharges = $helper->calculateDateSurchargeCost($_POST['pickup_datetime'], $_POST['return_datetime']);
     $transient_data['surcharge_cost'] += $date_surcharges['total'];
-    $transient_data['surcharge_data'] = array_merge($transient_data['surcharge_data'], $date_surcharges['data']);
+    $transient_data['surcharge_data'] = array_merge($transient_data['surcharge_data'], $date_surcharges['data'] ?: []);
 
     error_log(print_r($transient_data, true));
 
@@ -492,7 +492,7 @@ class Vbs_Public
    	// Update the transient
    	set_transient( $_POST['search'], $transient_data, 2 * HOUR_IN_SECONDS );
 
-   	$post_id = wp_insert_post([
+   	$args = [
    		'post_date' => date('Y-m-d H:i:s'),
    		'post_title' => '#' . $transient_data['id'],
    		'post_status' => 'publish',
@@ -504,19 +504,15 @@ class Vbs_Public
    			'_dropoff_address' => $transient_data['dropoff']['address'],
    			'_dropoff_address_coordinates' => $transient_data['dropoff']['lat'] . ', ' . $transient_data['dropoff']['lng'],
    			'_return' => $transient_data['return_datetime'] != '' ? 'yes' : 'no',
-   			'_return_datetime' => $transient_data['return_datetime'] ? date('Y-m-d H:i:s', strtotime($transient_data['return_datetime'])) : '',
+   			'_return_datetime' => $transient_data['return_datetime'] ? date('Y-m-d H:i:s', strtotime($transient_data['return_datetime'])) : null,
    			'_distance' => $transient_data['distance'],
    			'_disctance_cost' => $transient_data['vehicle_cost'],
-   			'_addons_cost' => $transient_data['addon_cost'],
+   			'_addons_cost' => $transient_data['addon_cost'] ?: 0,
    			'_surcharge_cost' => $transient_data['surcharge_cost'],
    			'_total_cost' => $transient_data['total_cost'],
    			'_vehicle' => $transient_data['vehicle'],
    			'_persons' => $transient_data['passengers'],
    			'_luggage' => '',
-   			'_addons|||0|value' => 'post:addon:' . $transient_data['addon'],
-				'_addons|||0|type' => 'post',
-				'_addons|||0|subtype' => 'addon',
-				'_addons|||0|id' => $transient_data['addon'],
    			'_first_name' => $transient_data['customer']['first_name'],
    			'_last_name' => $transient_data['customer']['last_name'],
    			'_email' => $transient_data['customer']['email'],
@@ -526,7 +522,25 @@ class Vbs_Public
    			'_status' => 'pending',
    			'_payment_method' => $transient_data['payment_method'],
    		],
-   	]);
+   	];
+
+    if ($transient_data['addon'] != 0) {
+      $args = array_merge($args['meta_input'], [
+        '_addons|||0|value' => 'post:addon:' . $transient_data['addon'],
+        '_addons|||0|type' => 'post',
+        '_addons|||0|subtype' => 'addon',
+        '_addons|||0|id' => $transient_data['addon'],
+      ]);
+    }
+
+    if ($transient_data['surcharge_data']) {
+      $helper = new Vbs_Helper();
+      $args['meta_input']['_surcharge_breakdown'] = implode("\r\n", array_map(function($item) use ($helper) {
+        return sprintf("%s: %s", $item['title'], $helper->formatPrice((float)$item['cost']) );
+      }, $transient_data['surcharge_data']));
+    }
+
+    $post_id = wp_insert_post($args);
 
    	if ( $post_id == 0 ) {
    		echo json_encode([

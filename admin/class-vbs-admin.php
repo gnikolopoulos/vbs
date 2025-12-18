@@ -518,6 +518,14 @@ class Vbs_Admin
         	->set_attribute('readOnly', true),
     	]);
 
+    Container::make( 'post_meta', __( 'Additional Information', 'vbs' ) )
+      ->where( 'post_type', '=', 'booking' )
+      ->set_context( 'normal' )
+      ->add_fields([
+        Field::make( 'textarea', 'surcharge_breakdown', __( 'Surcharge Breakdown', 'vbs' ) )
+          ->set_attribute('readOnly', true),
+      ]);
+
 	  // Surcharges
     Container::make( 'post_meta', __( 'Surcharge Conditions', 'vbs' ) )
     	->where( 'post_type', '=', 'surcharge' )
