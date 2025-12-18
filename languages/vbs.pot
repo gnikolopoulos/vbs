@@ -1,0 +1,854 @@
+# Copyright (C) 2025 George Nikolopoulos
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Vehicle Booking System 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vbs\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-12-18T13:34:59+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: vbs\n"
+
+#. Plugin Name of the plugin
+msgid "Vehicle Booking System"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.interactive-design.gr"
+msgstr ""
+
+#. Description of the plugin
+msgid "Vehicle booking system for Wordpress"
+msgstr ""
+
+#. Author of the plugin
+msgid "George Nikolopoulos"
+msgstr ""
+
+#: admin/class-vbs-admin.php:134
+#: admin/class-vbs-admin.php:135
+msgid "Vehicle Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:162
+msgid "Settings"
+msgstr ""
+
+#: admin/class-vbs-admin.php:164
+msgid "General"
+msgstr ""
+
+#: admin/class-vbs-admin.php:165
+msgid "Google Maps API key"
+msgstr ""
+
+#: admin/class-vbs-admin.php:167
+msgid "Default currency"
+msgstr ""
+
+#: admin/class-vbs-admin.php:174
+msgid "Page Configuration"
+msgstr ""
+
+#: admin/class-vbs-admin.php:175
+msgid "Page that contains the vehicles list shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:177
+msgid "Page that contains the addons list shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:179
+msgid "Page that contains the customer information shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:181
+msgid "Page that contains the booking summary shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:183
+msgid "Page that contains the payment pending shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:185
+msgid "Page that contains the booking confirmation shortcode"
+msgstr ""
+
+#: admin/class-vbs-admin.php:188
+#: admin/class-vbs-admin.php:189
+msgid "Vehicle Features"
+msgstr ""
+
+#: admin/class-vbs-admin.php:193
+#: admin/class-vbs-admin.php:208
+msgid "Name"
+msgstr ""
+
+#: admin/class-vbs-admin.php:195
+msgid "Icon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:203
+#: admin/class-vbs-admin.php:204
+msgid "Vehicle Categories"
+msgstr ""
+
+#: admin/class-vbs-admin.php:219
+msgid "Payment Methods"
+msgstr ""
+
+#: admin/class-vbs-admin.php:221
+msgid "Cash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:222
+#: admin/class-vbs-admin.php:232
+#: admin/class-vbs-admin.php:252
+msgid "Enabled"
+msgstr ""
+
+#: admin/class-vbs-admin.php:224
+#: admin/class-vbs-admin.php:234
+#: admin/class-vbs-admin.php:254
+msgid "Title"
+msgstr ""
+
+#: admin/class-vbs-admin.php:227
+#: admin/class-vbs-admin.php:237
+#: admin/class-vbs-admin.php:257
+msgid "Description"
+msgstr ""
+
+#: admin/class-vbs-admin.php:231
+msgid "Stripe"
+msgstr ""
+
+#: admin/class-vbs-admin.php:240
+msgid "Stripe Publishable Key"
+msgstr ""
+
+#: admin/class-vbs-admin.php:242
+msgid "Stripe Secret Key"
+msgstr ""
+
+#: admin/class-vbs-admin.php:244
+msgid "Environment"
+msgstr ""
+
+#: admin/class-vbs-admin.php:246
+msgid "Demo"
+msgstr ""
+
+#: admin/class-vbs-admin.php:247
+msgid "Live"
+msgstr ""
+
+#: admin/class-vbs-admin.php:251
+msgid "PayPal"
+msgstr ""
+
+#: admin/class-vbs-admin.php:260
+msgid "PayPal Email"
+msgstr ""
+
+#: admin/class-vbs-admin.php:266
+msgid "Driver Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:270
+#: admin/class-vbs-admin.php:499
+#: templates/shortcodes/booking_summary.php:35
+msgid "Email"
+msgstr ""
+
+#: admin/class-vbs-admin.php:271
+msgid "Phone Number"
+msgstr ""
+
+#: admin/class-vbs-admin.php:273
+msgid "License Number"
+msgstr ""
+
+#: admin/class-vbs-admin.php:274
+msgid "Date of birth"
+msgstr ""
+
+#: admin/class-vbs-admin.php:276
+#: admin/class-vbs-admin.php:374
+#: admin/class-vbs-admin.php:401
+#: admin/class-vbs-admin.php:583
+#: admin/class-vbs-admin.php:594
+msgid "Active"
+msgstr ""
+
+#: admin/class-vbs-admin.php:280
+msgid "Driver Images"
+msgstr ""
+
+#: admin/class-vbs-admin.php:284
+msgid "Photo"
+msgstr ""
+
+#: admin/class-vbs-admin.php:288
+#: admin/class-vbs-admin.php:462
+msgid "Vehicle Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:292
+msgid "Vehicle Category"
+msgstr ""
+
+#: admin/class-vbs-admin.php:295
+msgid "Fuel type"
+msgstr ""
+
+#: admin/class-vbs-admin.php:298
+msgid "Diesel"
+msgstr ""
+
+#: admin/class-vbs-admin.php:299
+msgid "Petrol"
+msgstr ""
+
+#: admin/class-vbs-admin.php:300
+msgid "Gas"
+msgstr ""
+
+#: admin/class-vbs-admin.php:302
+msgid "Doors"
+msgstr ""
+
+#: admin/class-vbs-admin.php:309
+msgid "Seats"
+msgstr ""
+
+#: admin/class-vbs-admin.php:315
+msgid "Luggage capacity"
+msgstr ""
+
+#: admin/class-vbs-admin.php:321
+msgid "Available Vehicles"
+msgstr ""
+
+#: admin/class-vbs-admin.php:327
+msgid "Cost type"
+msgstr ""
+
+#: admin/class-vbs-admin.php:330
+msgid "Flat"
+msgstr ""
+
+#: admin/class-vbs-admin.php:331
+msgid "Incremental"
+msgstr ""
+
+#: admin/class-vbs-admin.php:334
+msgid "Flat cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:343
+msgid "Incremental cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:355
+msgid "From distance"
+msgstr ""
+
+#: admin/class-vbs-admin.php:360
+msgid "To distance"
+msgstr ""
+
+#: admin/class-vbs-admin.php:365
+#: admin/class-vbs-admin.php:580
+#: admin/class-vbs-admin.php:893
+#: templates/shortcodes/booking_summary.php:41
+msgid "Cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:378
+#: admin/class-vbs-admin.php:383
+msgid "Features"
+msgstr ""
+
+#: admin/class-vbs-admin.php:388
+msgid "Addon Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:392
+msgid "Cost per booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:394
+msgid "Available on vehicles"
+msgstr ""
+
+#: admin/class-vbs-admin.php:406
+msgid "Booking Details"
+msgstr ""
+
+#: admin/class-vbs-admin.php:409
+msgid "Route Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:410
+#: templates/shortcodes/booking_summary.php:6
+msgid "Pickup Date/Time"
+msgstr ""
+
+#: admin/class-vbs-admin.php:417
+#: templates/shortcodes/booking_summary.php:7
+msgid "Pickup Address"
+msgstr ""
+
+#: admin/class-vbs-admin.php:419
+msgid "Pickup Address Coordinates"
+msgstr ""
+
+#: admin/class-vbs-admin.php:422
+#: templates/shortcodes/booking_summary.php:14
+msgid "Dropoff Address"
+msgstr ""
+
+#: admin/class-vbs-admin.php:424
+msgid "Dropoff Address Coordinates"
+msgstr ""
+
+#: admin/class-vbs-admin.php:427
+msgid "Return trip"
+msgstr ""
+
+#: admin/class-vbs-admin.php:429
+#: templates/shortcodes/booking_summary.php:20
+msgid "Return Date/Time"
+msgstr ""
+
+#: admin/class-vbs-admin.php:442
+msgid "Total Distance"
+msgstr ""
+
+#: admin/class-vbs-admin.php:445
+msgid "Distance Cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:448
+msgid "Addons Cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:451
+#: templates/shortcodes/booking_summary.php:52
+msgid "Surcharge Cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:454
+msgid "Total Cost"
+msgstr ""
+
+#: admin/class-vbs-admin.php:458
+#: admin/class-vbs-admin.php:459
+msgid "Route Map"
+msgstr ""
+
+#: admin/class-vbs-admin.php:463
+msgid "Selected Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:466
+msgid "Assigned Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:472
+msgid "Persons"
+msgstr ""
+
+#: admin/class-vbs-admin.php:478
+msgid "Luggage"
+msgstr ""
+
+#: admin/class-vbs-admin.php:485
+msgid "Addons Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:486
+msgid "Selected Addons"
+msgstr ""
+
+#: admin/class-vbs-admin.php:494
+msgid "Customer Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:495
+#: templates/shortcodes/booking_summary.php:33
+#: templates/shortcodes/customer_information.php:8
+msgid "First Name"
+msgstr ""
+
+#: admin/class-vbs-admin.php:497
+#: templates/shortcodes/booking_summary.php:34
+#: templates/shortcodes/customer_information.php:16
+msgid "Last Name"
+msgstr ""
+
+#: admin/class-vbs-admin.php:501
+#: templates/shortcodes/booking_summary.php:36
+#: templates/shortcodes/customer_information.php:36
+msgid "Phone"
+msgstr ""
+
+#: admin/class-vbs-admin.php:503
+#: templates/shortcodes/booking_summary.php:37
+#: templates/shortcodes/customer_information.php:44
+msgid "Mobile"
+msgstr ""
+
+#: admin/class-vbs-admin.php:505
+msgid "Customer Notes"
+msgstr ""
+
+#: admin/class-vbs-admin.php:507
+msgid "Misc Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:508
+msgid "Booking status"
+msgstr ""
+
+#: admin/class-vbs-admin.php:511
+msgid "Pending"
+msgstr ""
+
+#: admin/class-vbs-admin.php:512
+msgid "Confirmed"
+msgstr ""
+
+#: admin/class-vbs-admin.php:513
+msgid "Complete"
+msgstr ""
+
+#: admin/class-vbs-admin.php:514
+msgid "Canceled"
+msgstr ""
+
+#: admin/class-vbs-admin.php:517
+#: templates/shortcodes/booking_summary.php:73
+msgid "Payment Method"
+msgstr ""
+
+#: admin/class-vbs-admin.php:521
+msgid "Additional Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:525
+#: templates/shortcodes/booking_summary.php:61
+msgid "Surcharge Breakdown"
+msgstr ""
+
+#: admin/class-vbs-admin.php:530
+msgid "Surcharge Conditions"
+msgstr ""
+
+#: admin/class-vbs-admin.php:534
+msgid "Type"
+msgstr ""
+
+#: admin/class-vbs-admin.php:536
+#: admin/class-vbs-admin.php:894
+msgid "Date"
+msgstr ""
+
+#: admin/class-vbs-admin.php:537
+#: admin/class-vbs-admin.php:749
+#: admin/class-vbs-admin.php:751
+#: templates/shortcodes/booking_form.php:11
+#: templates/shortcodes/booking_form.php:29
+msgid "Location"
+msgstr ""
+
+#: admin/class-vbs-admin.php:539
+msgid "From date"
+msgstr ""
+
+#: admin/class-vbs-admin.php:549
+msgid "To date"
+msgstr ""
+
+#: admin/class-vbs-admin.php:559
+#: admin/class-vbs-admin.php:748
+#: admin/class-vbs-admin.php:750
+#: admin/class-vbs-admin.php:755
+#: admin/class-vbs-admin.php:767
+msgid "Locations"
+msgstr ""
+
+#: admin/class-vbs-admin.php:574
+msgid "Cost Type"
+msgstr ""
+
+#: admin/class-vbs-admin.php:576
+msgid "Flat Amount"
+msgstr ""
+
+#: admin/class-vbs-admin.php:577
+msgid "Percentage"
+msgstr ""
+
+#: admin/class-vbs-admin.php:589
+msgid "Location Information"
+msgstr ""
+
+#: admin/class-vbs-admin.php:593
+#: templates/shortcodes/booking_form.php:11
+#: templates/shortcodes/booking_form.php:29
+msgid "Address"
+msgstr ""
+
+#: admin/class-vbs-admin.php:613
+#: admin/class-vbs-admin.php:615
+#: admin/class-vbs-admin.php:620
+#: admin/class-vbs-admin.php:632
+msgid "Bookings"
+msgstr ""
+
+#: admin/class-vbs-admin.php:614
+#: admin/class-vbs-admin.php:616
+msgid "Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:617
+msgid "Add Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:618
+msgid "Edit Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:619
+msgid "New Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:621
+msgid "View Booking"
+msgstr ""
+
+#: admin/class-vbs-admin.php:622
+msgid "Search Bookings"
+msgstr ""
+
+#: admin/class-vbs-admin.php:623
+msgid "No Bookings found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:624
+msgid "No Bookings found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:658
+#: admin/class-vbs-admin.php:660
+#: admin/class-vbs-admin.php:665
+#: admin/class-vbs-admin.php:677
+msgid "Vehicles"
+msgstr ""
+
+#: admin/class-vbs-admin.php:659
+#: admin/class-vbs-admin.php:661
+#: admin/class-vbs-admin.php:890
+#: templates/shortcodes/booking_summary.php:26
+msgid "Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:662
+msgid "Add Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:663
+msgid "Edit Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:664
+msgid "New Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:666
+msgid "View Vehicle"
+msgstr ""
+
+#: admin/class-vbs-admin.php:667
+msgid "Search Vehicles"
+msgstr ""
+
+#: admin/class-vbs-admin.php:668
+msgid "No Vehicles found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:669
+msgid "No Vehicles found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:703
+#: admin/class-vbs-admin.php:705
+#: admin/class-vbs-admin.php:710
+#: admin/class-vbs-admin.php:722
+msgid "Drivers"
+msgstr ""
+
+#: admin/class-vbs-admin.php:704
+#: admin/class-vbs-admin.php:706
+#: admin/class-vbs-admin.php:891
+msgid "Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:707
+msgid "Add Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:708
+msgid "Edit Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:709
+msgid "New Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:711
+msgid "View Driver"
+msgstr ""
+
+#: admin/class-vbs-admin.php:712
+msgid "Search Drivers"
+msgstr ""
+
+#: admin/class-vbs-admin.php:713
+msgid "No Drivers found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:714
+msgid "No Drivers found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:752
+msgid "Add Location"
+msgstr ""
+
+#: admin/class-vbs-admin.php:753
+msgid "Edit Location"
+msgstr ""
+
+#: admin/class-vbs-admin.php:754
+msgid "New Location"
+msgstr ""
+
+#: admin/class-vbs-admin.php:756
+msgid "View Location"
+msgstr ""
+
+#: admin/class-vbs-admin.php:757
+msgid "Search Locations"
+msgstr ""
+
+#: admin/class-vbs-admin.php:758
+msgid "No Locations found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:759
+msgid "No Locations found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:793
+#: admin/class-vbs-admin.php:795
+#: admin/class-vbs-admin.php:800
+#: admin/class-vbs-admin.php:812
+msgid "Surcharges"
+msgstr ""
+
+#: admin/class-vbs-admin.php:794
+#: admin/class-vbs-admin.php:796
+msgid "Surcharge"
+msgstr ""
+
+#: admin/class-vbs-admin.php:797
+msgid "Add Surcharge"
+msgstr ""
+
+#: admin/class-vbs-admin.php:798
+msgid "Edit Surcharge"
+msgstr ""
+
+#: admin/class-vbs-admin.php:799
+msgid "New Surcharge"
+msgstr ""
+
+#: admin/class-vbs-admin.php:801
+msgid "View Surcharge"
+msgstr ""
+
+#: admin/class-vbs-admin.php:802
+msgid "Search Surcharges"
+msgstr ""
+
+#: admin/class-vbs-admin.php:803
+msgid "No Surcharges found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:804
+msgid "No Surcharges found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:838
+#: admin/class-vbs-admin.php:840
+#: admin/class-vbs-admin.php:845
+#: admin/class-vbs-admin.php:857
+#: templates/shortcodes/booking_summary.php:28
+msgid "Addons"
+msgstr ""
+
+#: admin/class-vbs-admin.php:839
+#: admin/class-vbs-admin.php:841
+msgid "Addon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:842
+msgid "Add Addon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:843
+msgid "Edit Addon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:844
+msgid "New Addon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:846
+msgid "View Addon"
+msgstr ""
+
+#: admin/class-vbs-admin.php:847
+msgid "Search Addons"
+msgstr ""
+
+#: admin/class-vbs-admin.php:848
+msgid "No Addons found"
+msgstr ""
+
+#: admin/class-vbs-admin.php:849
+msgid "No Addons found in Trash"
+msgstr ""
+
+#: admin/class-vbs-admin.php:888
+msgid "Status"
+msgstr ""
+
+#: admin/class-vbs-admin.php:889
+msgid "Pickup/Return Date"
+msgstr ""
+
+#: admin/class-vbs-admin.php:892
+msgid "Customer"
+msgstr ""
+
+#: templates/shortcodes/addons_list.php:18
+msgid "Select"
+msgstr ""
+
+#: templates/shortcodes/addons_list.php:23
+msgid "Skip"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:10
+#: templates/shortcodes/booking_summary.php:4
+msgid "Pickup"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:12
+#: templates/shortcodes/booking_form.php:30
+msgid "Type address here..."
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:28
+#: templates/shortcodes/booking_summary.php:11
+msgid "Dropoff"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:47
+msgid "Pickup Date / Time"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:55
+msgid "Return Date / Time"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:63
+#: templates/shortcodes/booking_summary.php:8
+msgid "Passengers"
+msgstr ""
+
+#: templates/shortcodes/booking_form.php:70
+msgid "Go!"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:13
+msgid "Dropoff Date/Time"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:18
+msgid "Return"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:24
+msgid "Trip information"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:27
+msgid "Distance"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:31
+msgid "Customer information"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:38
+#: templates/shortcodes/customer_information.php:54
+msgid "Notes"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:44
+msgid "Vehicle Cost"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:48
+msgid "Addon Cost"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:56
+msgid "Total"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:94
+#: templates/shortcodes/customer_information.php:63
+msgid "&larr; Back"
+msgstr ""
+
+#: templates/shortcodes/booking_summary.php:95
+msgid "Make Booking"
+msgstr ""
+
+#: templates/shortcodes/customer_information.php:26
+msgid "Email Address"
+msgstr ""
+
+#: templates/shortcodes/customer_information.php:67
+msgid "Next &rarr;"
+msgstr ""
+
+#: templates/shortcodes/vehicles_list.php:40
+msgid "Total Distance:"
+msgstr ""
+
+#: templates/shortcodes/vehicles_list.php:42
+msgid "Book Now"
+msgstr ""
