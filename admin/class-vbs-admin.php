@@ -162,6 +162,12 @@ class Vbs_Admin
     Container::make( 'theme_options', __( 'Settings', 'vbs' ) )
     	->set_page_parent( 'vbs.php' )
       ->add_tab( __( 'General', 'vbs' ), [
+        Field::make( 'image', 'email_logo', __( 'Email template logo', 'vbs' ) )
+          ->set_type( ['image'] )
+          ->set_help_text( __('Maximum width: 150px', 'vbs') ),
+        Field::make( 'image', 'email_header', __( 'Email header image', 'vbs' ) )
+          ->set_type( ['image'] )
+          ->set_help_text( __('Maximum width: 600px', 'vbs') ),
         Field::make( 'text', 'google_api_key', __( 'Google Maps API key', 'vbs' ) )
           ->set_help_text( __('https://developers.google.com/maps/documentation/places/web-service/get-api-key') ),
         Field::make( 'select', 'currency', __( 'Default currency', 'vbs' ) )

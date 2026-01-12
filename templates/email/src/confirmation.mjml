@@ -1,0 +1,74 @@
+<mjml>
+  <mj-head>
+    <mj-title>Your booking confirmation with {site_title}</mj-title>
+    <mj-preview>Your booking details are as included in this email</mj-preview>
+    <mj-attributes>
+      <mj-all font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-all>
+      <mj-text font-weight="400" font-size="16px" color="#000000" line-height="24px" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"></mj-text>
+    </mj-attributes>
+    <mj-style inline="inline">
+      .body-section {
+          -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+          -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+          box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+      }
+    </mj-style>
+    <mj-style inline="inline">
+      .text-link { color: #5e6ebf }
+    </mj-style>
+    <mj-style inline="inline">
+      .footer-link { color: #888888 }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#E7E7E7" width="600px">
+    <mj-section full-width="full-width" background-color="#040B4F" padding-bottom="0">
+      <mj-column width="100%">
+        <mj-image src="{logo_image}" alt="" align="center" width="150px" href="{site_url}" />
+      </mj-column>
+    </mj-section>
+    <mj-section background-color="#1f2e78" padding="0">
+      <mj-column width="100%" padding="0">
+        <mj-image src="{header_image}" width="600px" alt="" padding="0" />
+      </mj-column>
+    </mj-section>
+    <mj-wrapper padding-top="0" padding-bottom="0" css-class="body-section">
+      <mj-section background-color="#ffffff" padding-left="15px" padding-right="15px">
+        <mj-column width="100%">
+          <mj-text color="#212b35" font-weight="bold" font-size="20px">
+            Your booking confirmation
+          </mj-text>
+          <mj-text color="#637381" font-size="16px">
+            Hi {customer_name},
+          </mj-text>
+          <mj-text color="#637381" font-size="16px">
+            Please find details of your booking {id}, placed on {date} below.
+          </mj-text>
+          <mj-text color="#637381" font-size="16px">
+            <ul>
+              <li><strong>Pickup:</strong> {pickup_address}</li>
+              <li><strong>Dropoff:</strong> {dropoff_address}</li>
+              <li><strong>Return:</strong> {return}</li>
+              <li><strong>Vehicle:</strong> {vehicle}</li>
+              <li style="padding-top: 20px"><strong>Total:</strong> {cost}</li>
+            </ul>
+          </mj-text>
+          <mj-button background-color="#5e6ebf" align="center" color="#ffffff" font-size="17px" font-weight="bold" href="https://google.com" width="300px">
+            View Details
+          </mj-button>
+          <mj-spacer height="30px" />
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+
+    <mj-wrapper full-width="full-width">
+      <mj-section>
+        <mj-column width="100%" padding="0">
+          <mj-text color="#445566" font-size="11px" align="center" line-height="16px">
+            &copy; {site_title}, All Rights Reserved.
+          </mj-text>
+        </mj-column>
+      </mj-section>
+    </mj-wrapper>
+
+  </mj-body>
+</mjml>

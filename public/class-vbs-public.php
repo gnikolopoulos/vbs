@@ -550,6 +550,8 @@ class Vbs_Public
     	die();
    	}
 
+    $this->send_confirmation_email($transient_data);
+
    	$return_data = [
    		'result' => true,
    		'redirect' => get_page_link( carbon_get_theme_option( 'confirmation_page' ) ) . '?search=' . $_POST['search'],
@@ -669,6 +671,36 @@ class Vbs_Public
 
     echo json_encode($return_data);
     die();
+  }
+
+  private function send_confirmation_email( $data )
+  {
+    $subject = "Your booking confirmation with " . get_bloginfo('name');
+    $headers = [
+      'Content-Type: text/html; charset=UTF-8'
+    ];
+
+    ob_start();
+    require_once plugin_dir_path( dirname( __FILE__ ) ) . '/templates/email/confirmation.php';
+
+    $placeholders = [
+      '{site_title}' => get_bloginfo('name'),
+      '{site_url}' => home_url(),
+      '{logo_image}' => wp_get_attachment_image_url(carbon_get_theme_option('email_logo')),
+      '{header_image}' => wp_get_attachment_image_url(carbon_get_theme_option('email_header')),
+      '{customer_name}' => $data['customer']['first_name'],
+      '{id}' => '#'.$data['id'],
+      '{date}' => date('Y-m-d H:i:s'),
+      '{pickup_address}' => $data['pickup']['address'],
+      '{dropoff_address}' => $data['dropoff']['address'],
+      '{return}' => $data['return_datetime'] ?: __('No', 'vbs'),
+      '{vehicle}' => get_the_title($data['vehicle']),
+      '{cost}' => $data['total_cost'],
+    ];
+
+    $contents = strtr(ob_get_clean(), $placeholders);
+
+    return wp_mail( $data['customer']['email'], $subject, $contents, $headers );
   }
 
 }
